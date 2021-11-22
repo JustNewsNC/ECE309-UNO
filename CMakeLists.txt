@@ -3,4 +3,4 @@ project(main.cpp)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(UNOgame main.cpp)
+add_executable(UNOgame main.cpp UNOfuns.h)
