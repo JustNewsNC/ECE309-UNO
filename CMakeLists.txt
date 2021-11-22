@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(UNOgame.cpp)
+project(main.cpp)
 
 set(CMAKE_CXX_STANDARD 11)
 

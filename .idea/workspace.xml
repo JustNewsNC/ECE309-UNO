@@ -27,10 +27,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="213e9a15-c247-4565-8e11-833e89f83b0c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/UNOfuns.h" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/UNOgame.cpp" afterDir="false" />
-    </list>
+    <list default="true" id="213e9a15-c247-4565-8e11-833e89f83b0c" name="Default Changelist" comment="new files" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -60,6 +57,16 @@
     <property name="cf.first.check.clang-format" value="false" />
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UNOgame" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="main.cpp" TARGET_NAME="UNOgame" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="main.cpp" RUN_TARGET_NAME="UNOgame">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -74,8 +81,30 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1637608343094</updated>
-      <workItem from="1637608345326" duration="347000" />
+      <workItem from="1637608345326" duration="647000" />
     </task>
+    <task id="LOCAL-00001" summary="new files">
+      <created>1637608739518</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1637608739518</updated>
+    </task>
+    <task id="LOCAL-00002" summary="new files">
+      <created>1637608806781</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1637608806782</updated>
+    </task>
+    <task id="LOCAL-00003" summary="new files">
+      <created>1637608989750</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1637608989750</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -91,6 +120,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="new files" />
+    <option name="LAST_COMMIT_MESSAGE" value="new files" />
   </component>
   <component name="WindowStateProjectService">
     <state x="549" y="167" key="FileChooserDialogImpl" timestamp="1637608692232">
