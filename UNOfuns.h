@@ -9,8 +9,6 @@
 
 using std::string;
 
-char[4] COLORS = {'R', 'B', 'G', 'Y', 'W'} //Red, Blue, Green, Yellow, Wild(Black)
-char[] TYPES = {'R', 'S', 'C', '2', '4', 'N'} //Reverse, Switch, Color Change, +2, +4, Normal
 
 class Card {
 private:
@@ -28,6 +26,8 @@ public:
 
 class DrawPile{ //Cards to draw/deal from
 private:
+    char[4] colors = {'R', 'B', 'G', 'Y', 'W'}
+    char[6] types = {'R', 'S', 'C', '2', '4', 'N'}
     vector<Card> cards;
 public:
     Card* topOfDeck;
