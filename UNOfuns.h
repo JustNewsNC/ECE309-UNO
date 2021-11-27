@@ -1,6 +1,4 @@
-//
-// You can change anything that needs fixing, i didn't have much time to work on it
-//
+
 
 #ifndef ECE309_UNO_UNOFUNS_H
 #define ECE309_UNO_UNOFUNS_H
@@ -8,41 +6,90 @@
 #endif //ECE309_UNO_UNOFUNS_H
 #include <string>
 
+
 using std::string;
+
+char[4] COLORS = {'R', 'B', 'G', 'Y', 'W'} //Red, Blue, Green, Yellow, Wild(Black)
+char[] TYPES = {'R', 'S', 'C', '2', '4', 'N'} //Reverse, Switch, Color Change, +2, +4, Normal
 
 class Card {
 private:
     char color;
+    char type;
     int number;
+public:
+    Card(char c, char t, int num;){
+        color = c;
+        type = t;
+        number = num;
+    }
+    string Print(){} //returns a string describing the card
 };
 
-void shufflecards();
+class DrawPile{ //Cards to draw/deal from
+private:
+    vector<Card> cards;
+public:
+    Card* topOfDeck;
+    DrawPile(){}
+    void Deal(){} //Deal starting cards to players
+    void Shuffle(){}
+};
+
+class PlayPile{ //Cards that have been played
+private:
+    vector<Card> cards;
+public:
+    int length;
+    Card* topOfDeck;
+    PlayPile(){
+        length = 0;
+        topOfDeck = nullptr;
+    }
+    string PrintTop(){
+        return topOfDeck->Print();
+    }
+    void ReturnToDrawPile(){} //return played cards back to the draw pile
+};
+
+//player's cards
+class Hand{
+private:
+    vector<Card> cards;
+public:
+    int length;
+    Hand(){
+        length = 0;
+    }
+    void Play(){} //Play a card to the play pile
+    void Draw(){} //Draw a card from the draw pile
+    void Print(){} //View your current hand
+};
 
 class Player{
 public:
     string name;
-    int numofcards;
-
-    Player(string a) {
-        name = a;
-        numofcards = 0; //start with zero, so when cards are dealt the number is incremented to 7 that way
+    Hand currentCards;
+    Player(string name) {
+        this.name = name;
+        numofcards = 0;
+        currentcards = new Hand();
     }
-
-    void display(); //can be implemented in base class
-    virtual void placecard() = 0; //different for both computer and real player
-    virtual void pickcard() = 0; //
+    virtual void play(){}
+    
 };
 
 class RealPlayer : public Player{
 public:
     RealPlayer(string a):Player(a){};
-    virtual void placecard();
-    virtual void pickcard();
+    virtual void play(){} //GUI
 };
 
 class CompPlayer : public Player{
 public:
-    CompPlayer(string a):Player(a){};
-    virtual void placecard();
-    virtual void pickcard();
+    CompPlayer(int n){
+        name = "COM " + n;
+    }
+    virtual void play(){}; //Automatically play/dray cards
 };
+
