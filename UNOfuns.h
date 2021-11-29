@@ -6,11 +6,13 @@
 #endif //ECE309_UNO_UNOFUNS_H
 #include <string>
 #include <vector>
-
+#include <algorithm>
+#include <random>
+#include <ctime>
+#include <cstdlib>
 
 using std::string;
-
-
+int randomnum (int i) { return std::rand()%i;}
 
 class Card {
 private:
@@ -18,12 +20,27 @@ private:
     char type;
     int number;
 public:
-    Card(char c, char t, int num){
+    Card(char c = 'n', char t = 'n', int num = -1){ //n is for none, -1 is for none
         color = c;
         type = t;
         number = num; //-1 symbolizes that its not a number card (reverse, skip, draw, wild)
     }
-    string Print(); //returns a string describing the card
+    Card(const Card &other) { //copy constructor
+        color = other.color;
+        type = other.type;
+        number = other.number;
+    }
+    Card& operator= (const Card &other) { //assignment operator
+        color = other.color;
+        type = other.type;
+        number = other.number;
+        return *this;
+    }
+    ~Card(){} //destructor
+
+    void Print() { //prints card information
+        std::cout << color << type << number << std::endl;
+    }
 };
 
 class DrawPile{ //Cards to draw/deal from
@@ -35,6 +52,7 @@ public:
     std::vector<Card> cards; //top of deck is just cards.begin()
     DrawPile(){
         CreateDeck();
+        Shuffle();
     }
     void CreateDeck() {
         for(int i=0; i<4; i++) {
@@ -60,7 +78,10 @@ public:
             }
         }
     }
-    void Shuffle(){}
+    void Shuffle() {
+        std::srand ( unsigned ( std::time(0) ) );
+        std::random_shuffle(cards.begin(), cards.end(), randomnum);
+    }
     void Deal(){} //Deal starting cards to players
 };
 
@@ -74,8 +95,8 @@ public:
         length = 0;
         topOfDeck = nullptr;
     }
-    string PrintTop(){
-        return topOfDeck->Print();
+    void PrintTop(){ //prints top card on play pile
+        cards.begin()->Print();
     }
     void ReturnToDrawPile(){} //return played cards back to the draw pile
 };
