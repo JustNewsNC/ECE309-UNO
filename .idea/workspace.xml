@@ -29,7 +29,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="213e9a15-c247-4565-8e11-833e89f83b0c" name="Default Changelist" comment="update to header file" />
+    <list default="true" id="213e9a15-c247-4565-8e11-833e89f83b0c" name="Default Changelist" comment="a few error corrections">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UNOfuns.h" beforeDir="false" afterPath="$PROJECT_DIR$/UNOfuns.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -86,7 +90,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1637608343094</updated>
-      <workItem from="1637608345326" duration="6311000" />
+      <workItem from="1637608345326" duration="7632000" />
     </task>
     <task id="LOCAL-00001" summary="new files">
       <created>1637608739518</created>
@@ -130,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1637903598075</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="a few error corrections">
+      <created>1638154098987</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1638154098987</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,7 +161,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="new files" />
     <MESSAGE value="update to header file" />
-    <option name="LAST_COMMIT_MESSAGE" value="update to header file" />
+    <MESSAGE value="a few error corrections" />
+    <option name="LAST_COMMIT_MESSAGE" value="a few error corrections" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1637609066827">
@@ -181,10 +193,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1637610926400" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1637903613117">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1638154109725">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1637903613117" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1638154109725" />
     <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1638153789755">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

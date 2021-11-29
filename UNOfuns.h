@@ -5,6 +5,7 @@
 
 #endif //ECE309_UNO_UNOFUNS_H
 #include <string>
+#include <vector>
 
 
 using std::string;
@@ -21,14 +22,14 @@ public:
         type = t;
         number = num;
     }
-    string Print(){} //returns a string describing the card
+    string Print(); //returns a string describing the card
 };
 
 class DrawPile{ //Cards to draw/deal from
 private:
-    char[4] colors = {'R', 'B', 'G', 'Y', 'W'}
-    char[6] types = {'R', 'S', 'C', '2', '4', 'N'}
-    vector<Card> cards;
+    char colors[5] = {'R', 'B', 'G', 'Y', 'W'};
+    char types[6] = {'R', 'S', 'C', '2', '4', 'N'};
+    std::vector<Card> cards;
 public:
     Card* topOfDeck;
     DrawPile(){}
@@ -38,7 +39,7 @@ public:
 
 class PlayPile{ //Cards that have been played
 private:
-    vector<Card> cards;
+    std::vector<Card> cards;
 public:
     int length;
     Card* topOfDeck;
@@ -55,7 +56,7 @@ public:
 //player's cards
 class Hand{
 private:
-    vector<Card> cards;
+    std::vector<Card> cards;
 public:
     int length;
     Hand(){
@@ -71,9 +72,9 @@ public:
     string name;
     Hand currentCards;
     Player(string name) {
-        this.name = name;
-        numofcards = 0;
-        currentcards = new Hand();
+        this->name = name;
+        //numofcards = 0;               //remove comment when variables initialized
+        //currentcards = new Hand();
     }
     virtual void play(){}
     
@@ -87,8 +88,8 @@ public:
 
 class CompPlayer : public Player{
 public:
-    CompPlayer(int n){
-        name = "COM " + n;
+    CompPlayer(int n): Player("COM ") {
+        name += n;
     }
     virtual void play(){}; //Automatically play/dray cards
 };
