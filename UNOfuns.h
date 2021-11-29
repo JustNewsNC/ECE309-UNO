@@ -33,10 +33,35 @@ private:
 public:
     int numofcards = 0;
     std::vector<Card> cards; //top of deck is just cards.begin()
-    DrawPile(){}
-    DrawPile* CreateDeck();
-    void Deal(){} //Deal starting cards to players
+    DrawPile(){
+        CreateDeck();
+    }
+    void CreateDeck() {
+        for(int i=0; i<4; i++) {
+            cards.push_back(Card(colors[i],'N', 0));
+            numofcards++;
+            for(int j=1;j<10;j++) {
+                cards.push_back(Card(colors[i],'N', j));
+                cards.push_back(Card(colors[i],'N', j));
+                numofcards+=2;
+            }
+        }
+        for(int i=0; i<4; i++) {
+            for(int j=0; j<3; j++) {
+                cards.push_back(Card(colors[i],types[j], -1));
+                cards.push_back(Card(colors[i],types[j], -1));
+                numofcards+=2;
+            }
+        }
+        for(int i=0; i<2; i++) {
+            for(int j=0; j<4; j++) {
+                cards.push_back(Card('W',types[3+i], -1));
+                numofcards++;
+            }
+        }
+    }
     void Shuffle(){}
+    void Deal(){} //Deal starting cards to players
 };
 
 class PlayPile{ //Cards that have been played

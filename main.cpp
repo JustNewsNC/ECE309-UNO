@@ -44,35 +44,6 @@ void GameStartNoPlayer(){
 }
 
 
-DrawPile* DrawPile::CreateDeck(){ //creates deck
-    DrawPile* deck = new DrawPile();
-    for(int i=0; i<4; i++) {
-        deck->cards.push_back(Card(deck->colors[i],'N', 0));
-        deck->numofcards++;
-        for(int j=1;j<10;j++) {
-            deck->cards.push_back(Card(deck->colors[i],'N', j));
-            deck->cards.push_back(Card(deck->colors[i],'N', j));
-            deck->numofcards+=2;
-        }
-    }
-    for(int i=0; i<4; i++) {
-        for(int j=0; j<3; j++) {
-            deck->cards.push_back(Card(deck->colors[i],deck->types[j], -1));
-            deck->cards.push_back(Card(deck->colors[i],deck->types[j], -1));
-            deck->numofcards+=2;
-        }
-    }
-    for(int i=0; i<2; i++) {
-        for(int j=0; j<4; j++) {
-            deck->cards.push_back(Card('W',deck->types[3+i], -1));
-            deck->numofcards++;
-        }
-    }
-
-    return deck;
-}
-
-
 int main() {
     /*int turnCount = 1;
     char input;
@@ -86,7 +57,6 @@ int main() {
         GameStartNoPlayer();
     }*/
     DrawPile* draw = new DrawPile();
-    draw->CreateDeck();
     draw->Deal();
     /*PlayPile* play = new PlayPile();
     int playerIndex = 0;
