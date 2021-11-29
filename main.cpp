@@ -13,6 +13,7 @@ void createPlayers(int amount){
     int i = 0;
     while(i <= amount){
         playerList.push_back(new CompPlayer(i));
+        i++;
     }
 }
 
@@ -41,7 +42,7 @@ void GameStartNoPlayer(){
     int input = 0;
     cout << "How many computers would you like to see play?" << endl;
     cin >> input;
-    createPlayers(playerCount);
+    createPlayers(playerCount); //need to initialize playerCount
     return;
 }
 
@@ -59,7 +60,7 @@ int main() {
         GameStartNoPlayer();
     }
     DrawPile* draw = new DrawPile();
-    DrawPile->deal();
+    draw->Deal();
     PlayPile* play = new PlayPile();
     int playerIndex = 0;
     Player* currentPlayer = nullptr;
@@ -73,11 +74,9 @@ int main() {
         currentPlayer->play(); //play function differs between AI and humans
         cout << currentPlayer->name << " played " << play->PrintTop() << endl;
         if(currentPlayer->currentCards.length == 0){
-            cout << playerList->name << " has won!" << endl;
+            cout << currentPlayer->name << " has won!" << endl;
             winner = true;
         }
-        
-        
     }
     return 0;
 }

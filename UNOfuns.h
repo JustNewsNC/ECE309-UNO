@@ -27,8 +27,8 @@ public:
 
 class DrawPile{ //Cards to draw/deal from
 private:
-    char colors[5] = {'R', 'B', 'G', 'Y', 'W'};
-    char types[6] = {'R', 'S', 'C', '2', '4', 'N'};
+    char colors[5] = {'R', 'B', 'G', 'Y', 'W'}; //RED, BLUE, GREEN, YELLOW, WILD
+    char types[6] = {'R', 'S', 'C', '2', '4', 'N'}; //REVERSE, SKIP, _____ , DRAW 2, DRAW 4, ______
     std::vector<Card> cards;
 public:
     Card* topOfDeck;
