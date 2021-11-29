@@ -16,7 +16,7 @@ private:
     char type;
     int number;
 public:
-    Card(char c, char t, int num;){
+    Card(char c, char t, int num){
         color = c;
         type = t;
         number = num;

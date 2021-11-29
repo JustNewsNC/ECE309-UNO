@@ -6,6 +6,7 @@
 #include <vector>
 
 vector<Player> PLAYERLIST;
+using namespace std
 
 int main() {
     int turnCount = 1;
@@ -24,7 +25,7 @@ int main() {
     int playerIndex = 0;
     Player* currentPlayer = nullptr;
     
-    While(!winner){
+    while(!winner){
         cout << "Turn " << turnCount << ". -------------" << endl;
         cout << "The card on top is: " << play->PrintTop() << endl;
         playerIndex = currentTurn % PLAYERLIST.size; //Finds the remainder on the turn count to shortcut keeping track of the player list
