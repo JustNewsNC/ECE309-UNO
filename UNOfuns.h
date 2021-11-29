@@ -11,6 +11,7 @@
 using std::string;
 
 
+
 class Card {
 private:
     char color;
@@ -28,11 +29,12 @@ public:
 class DrawPile{ //Cards to draw/deal from
 private:
     char colors[5] = {'R', 'B', 'G', 'Y', 'W'}; //RED, BLUE, GREEN, YELLOW, WILD
-    char types[6] = {'R', 'S', 'C', '2', '4', 'N'}; //REVERSE, SKIP, _____ , DRAW 2, DRAW 4, ______
-    std::vector<Card> cards;
+    char types[6] = {'R', 'S', 'C', '2', '4', 'N'}; //REVERSE, SKIP, CHOOSE , DRAW 2, DRAW 4, NUMBER
 public:
-    Card* topOfDeck;
+    int numofcards = 0;
+    std::vector<Card> cards; //top of deck is just cards.begin()
     DrawPile(){}
+    DrawPile* CreateDeck();
     void Deal(){} //Deal starting cards to players
     void Shuffle(){}
 };

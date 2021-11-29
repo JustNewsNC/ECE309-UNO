@@ -10,9 +10,9 @@ vector<Player> playerList;
 
 //fills a vector with the specified amount of bots
 void createPlayers(int amount){
-    int i = 0;
-    while(i <= amount){
-        playerList.push_back(new CompPlayer(i));
+    int i = 1;
+    while(i <= amount + 1){
+        playerList.push_back(CompPlayer(i));
         i++;
     }
 }
@@ -23,7 +23,7 @@ void GameStartWithPlayer(){
     char input;
     cout << "Welcome! What is your name?" << endl;
     cin >> name;
-    playerList.push_back(new RealPlayer(name));
+    playerList.push_back(RealPlayer(name));
     cout << "Are you readY to play, " << playerList.front().name << "? (Y/N)" << endl;
     cin >> input;
 
@@ -32,18 +32,32 @@ void GameStartWithPlayer(){
         cout << "How many enemies would you like to play against? (1-3)" << endl;
         cin >> playerCount;
         createPlayers(playerCount);
-    } else {
-        main(); //why are you calling main here?
     }
 }
 
 //setups a game for spectators
 void GameStartNoPlayer(){
-    int input = 0;
+    int playerCount = 0;
     cout << "How many computers would you like to see play?" << endl;
-    cin >> input;
+    cin >> playerCount;
     createPlayers(playerCount); //need to initialize playerCount
-    return;
+}
+
+
+DrawPile* DrawPile::CreateDeck(){
+    DrawPile* deck = new DrawPile();
+    while(deck->numofcards != 108) {
+        for(int i=0; i<4; i++) {
+            deck->cards.push_back(Card(deck->colors[i],'N', 0));
+            for(int j=1;j<10;j++) {
+                deck->cards.push_back(Card(deck->colors[i],'N', j));
+                deck->cards.push_back(Card(deck->colors[i],'N', j));
+            }
+        }
+    }
+
+
+    return deck;
 }
 
 
@@ -60,8 +74,9 @@ int main() {
         GameStartNoPlayer();
     }
     DrawPile* draw = new DrawPile();
+    draw->CreateDeck();
     draw->Deal();
-    PlayPile* play = new PlayPile();
+    /*PlayPile* play = new PlayPile();
     int playerIndex = 0;
     Player* currentPlayer = nullptr;
     
@@ -77,7 +92,7 @@ int main() {
             cout << currentPlayer->name << " has won!" << endl;
             winner = true;
         }
-    }
+    }*/
     return 0;
 }
 
