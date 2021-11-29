@@ -21,7 +21,7 @@ public:
     Card(char c, char t, int num){
         color = c;
         type = t;
-        number = num;
+        number = num; //-1 symbolizes that its not a number card (reverse, skip, draw, wild)
     }
     string Print(); //returns a string describing the card
 };
@@ -29,7 +29,7 @@ public:
 class DrawPile{ //Cards to draw/deal from
 private:
     char colors[5] = {'R', 'B', 'G', 'Y', 'W'}; //RED, BLUE, GREEN, YELLOW, WILD
-    char types[6] = {'R', 'S', 'C', '2', '4', 'N'}; //REVERSE, SKIP, CHOOSE , DRAW 2, DRAW 4, NUMBER
+    char types[6] = {'R','S','2', 'C', '4', 'N'}; //REVERSE, SKIP, DRAW 2, CHOOSE, DRAW 4, NUMBER
 public:
     int numofcards = 0;
     std::vector<Card> cards; //top of deck is just cards.begin()
