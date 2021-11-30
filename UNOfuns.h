@@ -40,7 +40,18 @@ public:
     ~Card(){} //destructor
 
     void Print() { //prints card information
-        std::cout << color << type << number << std::endl;
+        if(color == 'R') std::cout << "Red ";
+        else if(color == 'B') std::cout << "Blue ";
+        else if(color == 'G') std::cout << "Green ";
+        else if(color == 'Y') std::cout << "Yellow ";
+        else if(color == 'W') {
+            std::cout << "Wild ";
+            if(type == 4) std::cout << "Draw 4";
+        }
+        if(type == 'N') std::cout << number;
+        else if (type == 'R') std::cout << "Reverse";
+        else if (type == 'S') std::cout << "Skip";
+        else std::cout << "Draw 2";
     }
 };
 
@@ -112,7 +123,12 @@ public:
     }
     void Play(); //Play a card to the play pile
     void Draw(); //Draw a card from the draw pile
-    void Print(); //View your current hand
+    void Print() { //View your current hand
+        for(int i=0; i<(int)hcards.size(); i++) {
+            hcards[i].Print();
+            std::cout << ", ";
+        }
+    }
 };
 
 class Player{

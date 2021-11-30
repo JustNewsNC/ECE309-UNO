@@ -13,7 +13,7 @@ PlayPile* playstack = new PlayPile();
 //fills a vector with the specified amount of bots
 void createPlayers(int amount){
     int i = 1;
-    while(i <= amount + 1){
+    while(i < amount + 1){
         playerList.push_back(CompPlayer(i));
         i++;
     }
@@ -30,13 +30,13 @@ void GameStartWithPlayer(){
         cout << "Are you Ready to play, " << playerList.front().name << "? (Y/N)" << endl;
         cin >> input;
         int playerCount = 0;
-        if (toupper(input == 'Y')) {
+        if (input == 'Y' || input == 'y') {
             cout << "How many enemies would you like to play against? (1-3)" << endl;
             cin >> playerCount;
             createPlayers(playerCount);
             return;
         }
-        else if(toupper(input == 'N')) {
+        else if(input == 'N' || input == 'n') {
             cout << "Exiting Game" << endl;
             abort();
         }
@@ -82,9 +82,17 @@ int main() {
     }
     drawstack->Deal();
     playstack->pcards.push_back(drawstack->dcards[drawstack->numofcards-1]);
+    playstack->length++;
     drawstack->dcards.pop_back();
     drawstack->numofcards--;
-    int playerIndex = 0;
+
+    for(int i=0; i<(int)playerList.size(); i++) {
+        cout << playerList[i].name << ": ";
+        playerList[i].currentCards.Print();
+        cout << endl;
+    }
+
+    /*int playerIndex = 0;
     Player* currentPlayer = nullptr;
     
     while(!winner){
@@ -99,7 +107,7 @@ int main() {
         }
         if(playerIndex < (int)playerList.size()-1) playerIndex++;
         else playerIndex = 0;
-    }
+    }*/
     return 0;
 }
 
