@@ -1,5 +1,3 @@
-
-
 #ifndef ECE309_UNO_UNOFUNS_H
 #define ECE309_UNO_UNOFUNS_H
 
@@ -16,7 +14,7 @@ using std::string;
 int randomnum (int i) { return std::rand()%i;}
 
 class Card {
-private:
+public:             //currently public for convenience will fix later
     char color;
     char type;
     int number;
@@ -121,10 +119,23 @@ public:
     Hand(){
         length = 0;
     }
+    Card* getCard(int i) {
+        return &hcards[i];
+    }
+    void remove(int index) {
+        Card hold;
+        if(index != (int)hcards.size()-1) {
+            hold = hcards[index];
+            hcards[index] = hcards[(int)hcards.size()-1];
+            hcards[(int)hcards.size()-1] = hold;
+        }
+        hcards.pop_back();
+    }
     void Play(); //Play a card to the play pile
     void Draw(); //Draw a card from the draw pile
     void Print() { //View your current hand
         for(int i=0; i<(int)hcards.size(); i++) {
+            std::cout << i+1 << ") ";
             hcards[i].Print();
             std::cout << ", ";
         }
@@ -140,14 +151,14 @@ public:
         this->name = pname;
         numofcards = 0;
     }
-    virtual void play(){}
-    
+    virtual void play() {std::cout << "Did base" << std::endl;} //testing which function it calls (remove later)
+
 };
 
 class RealPlayer : public Player{
 public:
     RealPlayer(string a):Player(a){};
-    virtual void play(){} //GUI
+    virtual void play(); //GUI
 };
 
 class CompPlayer : public Player{
@@ -155,6 +166,5 @@ public:
     CompPlayer(int n): Player("COM ") {
         name += std::to_string(n);
     }
-    virtual void play(){}; //Automatically play/dray cards
+    virtual void play() {}; //Automatically play/dray cards
 };
-

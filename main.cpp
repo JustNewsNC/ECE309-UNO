@@ -69,8 +69,33 @@ void DrawPile::Deal() {
     for(int i=0; i<7; i++) {
         for(int j=0; j<(int)playerList.size(); j++) {
             playerList[j].currentCards.Draw();
+            playerList[j].numofcards++;
             numofcards--;
         }
+    }
+}
+
+void RealPlayer::play() {
+    int input;
+    Card* hold;
+    cout << "You have " << numofcards << " Remaining!" << endl;
+    while(1) {
+        cout << "Your Cards Are: ";
+        currentCards.Print();
+        cout << endl;
+        cout << "Which Card do you Wish to Play? (please enter card number)" << endl;
+        cin >> input;
+        if(input >= 1 && input < currentCards.length + 1) {
+            hold = currentCards.getCard(input-1);
+            if(hold->color == playstack->topOfDeck->color || (hold->type == playstack->topOfDeck->type && hold->number == playstack->topOfDeck->number)) {
+                playstack->pcards.push_back(*hold);
+                currentCards.remove(input);
+                return;
+            }
+            cout << "Unplayable Card" << endl;
+        }
+        else cout << "Invalid Input" << endl;
+        return;
     }
 }
 
@@ -91,11 +116,13 @@ int main() {
     drawstack->dcards.pop_back();
     drawstack->numofcards--;
 
-    for(int i=0; i<(int)playerList.size(); i++) {
+    for(int i=0; i<(int)playerList.size(); i++) { //prints all players card (used to test shuffle, deal, and draw)
         cout << playerList[i].name << ": ";
         playerList[i].currentCards.Print();
         cout << endl;
+        playerList[i].play(); // I can't get the compiler to call the RealPlayer.play()
     }
+
 
     /*int playerIndex = 0;
     Player* currentPlayer = nullptr;
