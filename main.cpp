@@ -31,10 +31,15 @@ void GameStartWithPlayer(){
         cin >> input;
         int playerCount = 0;
         if (input == 'Y' || input == 'y') {
-            cout << "How many enemies would you like to play against? (1-3)" << endl;
-            cin >> playerCount;
-            createPlayers(playerCount);
-            return;
+            while(playerCount < 1 || playerCount > 3) {
+                cout << "How many enemies would you like to play against? (1-3)" << endl;
+                cin >> playerCount;
+                if(playerCount < 1 || playerCount > 3) cout << "Please Enter Valid Number" << endl;
+                else {
+                    createPlayers(playerCount);
+                    return;
+                }
+            }
         }
         else if(input == 'N' || input == 'n') {
             cout << "Exiting Game" << endl;

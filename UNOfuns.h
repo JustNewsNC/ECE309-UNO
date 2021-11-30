@@ -153,7 +153,7 @@ public:
 class CompPlayer : public Player{
 public:
     CompPlayer(int n): Player("COM ") {
-        name += n;
+        name += std::to_string(n);
     }
     virtual void play(){}; //Automatically play/dray cards
 };
