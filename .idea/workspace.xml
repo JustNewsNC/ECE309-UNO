@@ -29,9 +29,8 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="213e9a15-c247-4565-8e11-833e89f83b0c" name="Default Changelist" comment="working on deck&#10;CreateDeck() finished">
+    <list default="true" id="213e9a15-c247-4565-8e11-833e89f83b0c" name="Default Changelist" comment="working on deck&#10;CreateDeck() finished&#10;Shuffle() finished&#10;Implemented RO3 on Card">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UNOfuns.h" beforeDir="false" afterPath="$PROJECT_DIR$/UNOfuns.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1637608343094</updated>
-      <workItem from="1637608345326" duration="16536000" />
+      <workItem from="1637608345326" duration="17961000" />
     </task>
     <task id="LOCAL-00001" summary="new files">
       <created>1637608739518</created>
@@ -176,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1638214924901</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="working on deck&#10;CreateDeck() finished&#10;Shuffle() finished&#10;Implemented RO3 on Card">
+      <created>1638218562025</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1638218562025</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,7 +206,8 @@
     <MESSAGE value="fixed most errors" />
     <MESSAGE value="working on deck" />
     <MESSAGE value="working on deck&#10;CreateDeck() finished" />
-    <option name="LAST_COMMIT_MESSAGE" value="working on deck&#10;CreateDeck() finished" />
+    <MESSAGE value="working on deck&#10;CreateDeck() finished&#10;Shuffle() finished&#10;Implemented RO3 on Card" />
+    <option name="LAST_COMMIT_MESSAGE" value="working on deck&#10;CreateDeck() finished&#10;Shuffle() finished&#10;Implemented RO3 on Card" />
   </component>
   <component name="WindowStateProjectService">
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1637609066827">
@@ -211,46 +218,46 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="549" y="167" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1637609045523" />
-    <state width="1493" height="198" key="GridCell.Tab.0.bottom" timestamp="1638218453476">
+    <state width="1493" height="198" key="GridCell.Tab.0.bottom" timestamp="1638218553760">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1638218453476" />
-    <state width="1493" height="198" key="GridCell.Tab.0.center" timestamp="1638218453476">
+    <state width="1493" height="198" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1638218553760" />
+    <state width="1493" height="198" key="GridCell.Tab.0.center" timestamp="1638218553760">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1638218453476" />
-    <state width="1493" height="198" key="GridCell.Tab.0.left" timestamp="1638218453476">
+    <state width="1493" height="198" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1638218553760" />
+    <state width="1493" height="198" key="GridCell.Tab.0.left" timestamp="1638218553760">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1638218453476" />
-    <state width="1493" height="198" key="GridCell.Tab.0.right" timestamp="1638218453476">
+    <state width="1493" height="198" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1638218553760" />
+    <state width="1493" height="198" key="GridCell.Tab.0.right" timestamp="1638218553760">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1638218453476" />
-    <state width="1493" height="198" key="GridCell.Tab.1.bottom" timestamp="1638218453351">
+    <state width="1493" height="198" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1638218553760" />
+    <state width="1493" height="198" key="GridCell.Tab.1.bottom" timestamp="1638218553760">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1638218453351" />
-    <state width="1493" height="198" key="GridCell.Tab.1.center" timestamp="1638218453351">
+    <state width="1493" height="198" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1638218553760" />
+    <state width="1493" height="198" key="GridCell.Tab.1.center" timestamp="1638218553760">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1638218453351" />
-    <state width="1493" height="198" key="GridCell.Tab.1.left" timestamp="1638218453351">
+    <state width="1493" height="198" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1638218553760" />
+    <state width="1493" height="198" key="GridCell.Tab.1.left" timestamp="1638218553760">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1638218453351" />
-    <state width="1493" height="198" key="GridCell.Tab.1.right" timestamp="1638218453351">
+    <state width="1493" height="198" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1638218553760" />
+    <state width="1493" height="198" key="GridCell.Tab.1.right" timestamp="1638218553760">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="198" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1638218453351" />
+    <state width="1493" height="198" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1638218553760" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1637610926400">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="277" y="57" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1637610926400" />
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1638214929395">
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2" timestamp="1638218566428">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1638214929395" />
+    <state x="361" y="145" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1638218566428" />
     <state x="586" y="326" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1638207094110">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -261,7 +268,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/main.cpp</url>
-          <line>62</line>
+          <line>72</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
