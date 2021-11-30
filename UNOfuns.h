@@ -6,6 +6,7 @@
 #endif //ECE309_UNO_UNOFUNS_H
 #include <string>
 #include <vector>
+#include <stack>
 #include <algorithm>
 #include <random>
 #include <ctime>
@@ -49,46 +50,45 @@ private:
     char types[6] = {'R','S','2', 'C', '4', 'N'}; //REVERSE, SKIP, DRAW 2, CHOOSE, DRAW 4, NUMBER
 public:
     int numofcards = 0;
-    std::vector<Card> cards; //top of deck is just cards.begin()
+    std::vector<Card> dcards; //top of deck is just cards.end()
     DrawPile(){
         CreateDeck();
         Shuffle();
     }
     void CreateDeck() {
         for(int i=0; i<4; i++) {
-            cards.push_back(Card(colors[i],'N', 0));
+            dcards.push_back(Card(colors[i],'N', 0));
             numofcards++;
             for(int j=1;j<10;j++) {
-                cards.push_back(Card(colors[i],'N', j));
-                cards.push_back(Card(colors[i],'N', j));
+                dcards.push_back(Card(colors[i],'N', j));
+                dcards.push_back(Card(colors[i],'N', j));
                 numofcards+=2;
             }
         }
         for(int i=0; i<4; i++) {
             for(int j=0; j<3; j++) {
-                cards.push_back(Card(colors[i],types[j], -1));
-                cards.push_back(Card(colors[i],types[j], -1));
+                dcards.push_back(Card(colors[i],types[j], -1));
+                dcards.push_back(Card(colors[i],types[j], -1));
                 numofcards+=2;
             }
         }
         for(int i=0; i<2; i++) {
             for(int j=0; j<4; j++) {
-                cards.push_back(Card('W',types[3+i], -1));
+                dcards.push_back(Card('W',types[3+i], -1));
                 numofcards++;
             }
         }
     }
     void Shuffle() {
         std::srand ( unsigned ( std::time(0) ) );
-        std::random_shuffle(cards.begin(), cards.end(), randomnum);
+        std::random_shuffle(dcards.begin(), dcards.end(), randomnum);
     }
-    void Deal(){} //Deal starting cards to players
+    void Deal(); //Deal starting cards to players
 };
 
 class PlayPile{ //Cards that have been played
-private:
-    std::vector<Card> cards;
 public:
+    std::vector<Card> pcards;
     int length;
     Card* topOfDeck;
     PlayPile(){
@@ -96,7 +96,7 @@ public:
         topOfDeck = nullptr;
     }
     void PrintTop(){ //prints top card on play pile
-        cards.begin()->Print();
+        pcards.end()->Print();
     }
     void ReturnToDrawPile(){} //return played cards back to the draw pile
 };
@@ -104,25 +104,25 @@ public:
 //player's cards
 class Hand{
 private:
-    std::vector<Card> cards;
+    std::vector<Card> hcards;
 public:
     int length;
     Hand(){
         length = 0;
     }
-    void Play(){} //Play a card to the play pile
-    void Draw(){} //Draw a card from the draw pile
-    void Print(){} //View your current hand
+    void Play(); //Play a card to the play pile
+    void Draw(); //Draw a card from the draw pile
+    void Print(); //View your current hand
 };
 
 class Player{
 public:
     string name;
+    int numofcards;
     Hand currentCards;
-    Player(string name) {
-        this->name = name;
-        //numofcards = 0;               //remove comment when variables initialized
-        //currentcards = new Hand();
+    Player(string pname) {
+        this->name = pname;
+        numofcards = 0;
     }
     virtual void play(){}
     

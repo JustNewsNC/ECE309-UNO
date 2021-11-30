@@ -26,14 +26,23 @@ void GameStartWithPlayer(){
     cout << "Welcome! What is your name?" << endl;
     cin >> name;
     playerList.push_back(RealPlayer(name));
-    cout << "Are you Ready to play, " << playerList.front().name << "? (Y/N)" << endl;
-    cin >> input;
-
-    int playerCount = 0;
-    if(toupper(input == 'Y')){
-        cout << "How many enemies would you like to play against? (1-3)" << endl;
-        cin >> playerCount;
-        createPlayers(playerCount);
+    while(1) {
+        cout << "Are you Ready to play, " << playerList.front().name << "? (Y/N)" << endl;
+        cin >> input;
+        int playerCount = 0;
+        if (toupper(input == 'Y')) {
+            cout << "How many enemies would you like to play against? (1-3)" << endl;
+            cin >> playerCount;
+            createPlayers(playerCount);
+            return;
+        }
+        else if(toupper(input == 'N')) {
+            cout << "Exiting Game" << endl;
+            abort();
+        }
+        else {
+            cout << "Please enter either Y or N" << endl;
+        }
     }
 }
 
@@ -46,46 +55,50 @@ void GameStartNoPlayer(){
 }
 
 void Hand::Draw() {
-    cards.push_back(drawstack->cards[0]);
-
+    hcards.push_back(drawstack->dcards[drawstack->dcards.size()-1]); //top of stack is actually end of vector
+    length++;
+    drawstack->dcards.pop_back();
 }
 
 void DrawPile::Deal() {
     for(int i=0; i<7; i++) {
         for(int j=0; j<(int)playerList.size(); j++) {
             playerList[j].currentCards.Draw();
+            numofcards--;
         }
     }
 }
 
 int main() {
-    int turnCount = 1;
     char input;
     bool winner = false;
     cout << "Are you a player or spectator? (P/S)" << endl;
     cin >> input;
-    if(input == 'P'){
+    if(input == 'P' || input == 'p'){
         GameStartWithPlayer();
     }
     else {
         GameStartNoPlayer();
     }
     drawstack->Deal();
+    playstack->pcards.push_back(drawstack->dcards[drawstack->numofcards-1]);
+    drawstack->dcards.pop_back();
+    drawstack->numofcards--;
     int playerIndex = 0;
     Player* currentPlayer = nullptr;
     
     while(!winner){
-        cout << "Turn " << turnCount << ". -------------" << endl;
         cout << "The card on top is: "; playstack->PrintTop(); cout << endl;
-        playerIndex = turnCount % playerList.size(); //Finds the remainder on the turn count to shortcut keeping track of the player list
         currentPlayer = &playerList[playerIndex];
         cout << "It is " << currentPlayer->name << "'s turn" << endl;
-        currentPlayer->play(); //play function differs between AI and humans
+        //currentPlayer->play(); //play function differs between AI and humans
         cout << currentPlayer->name << " played "; playstack->PrintTop(); cout << endl;
         if(currentPlayer->currentCards.length == 0){
             cout << currentPlayer->name << " has won!" << endl;
             winner = true;
         }
+        if(playerIndex < (int)playerList.size()-1) playerIndex++;
+        else playerIndex = 0;
     }
     return 0;
 }
