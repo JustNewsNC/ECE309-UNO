@@ -104,13 +104,12 @@ class PlayPile{ //Cards that have been played
 public:
     std::vector<Card> pcards;
     int length;
-    Card* topOfDeck;
     PlayPile(){
         length = 0;
-        topOfDeck = nullptr;
     }
+    Card* topOfDeck() {return &pcards[length - 1];}
     void PrintTop(){ //prints top card on play pile
-        pcards.end()->Print();
+        topOfDeck()->Print();
     }
     void ReturnToDrawPile(){} //return played cards back to the draw pile
 };
@@ -193,7 +192,7 @@ public:
                 cin >> input;
                 if (input >= 1 && input < currentCards.length + 1) {
                     hold = currentCards.getCard(input - 1);
-                    if (hold->playable(table->playstack->topOfDeck)) {
+                    if (hold->playable(table->playstack->topOfDeck())) {
                         table->playstack->pcards.push_back(*hold);
                         currentCards.remove(input);
                         return;
@@ -217,5 +216,25 @@ public:
     CompPlayer(int n): Player("COM ") {
         name += std::to_string(n);
     }
-    virtual void play() {}; //Automatically play/draw cards
+    virtual void play(Table* table) { //Automatically play/draw cards
+        DrawPile* deck = table->drawstack;
+        PlayPile* playpile = table->playstack;
+        Card* currcard;
+
+        for(int i=0; i<currentCards.length; i++) { //find first playable card in computers hand
+            currcard = currentCards.getCard(i);
+            if(currcard->playable(playpile->topOfDeck())) {
+                playpile->pcards.push_back(*currcard);
+                currentCards.remove(i);
+                return;
+            }
+        }
+
+        draw(deck); //if no playable cards, draw a card from the deck
+        currcard = currentCards.getCard(currentCards.length - 1);
+        if(currcard->playable(playpile->topOfDeck())) { //if card is then playable, then play it. Otherwise return
+            playpile->pcards.push_back(*currcard);
+            currentCards.remove(currentCards.length - 1);
+        }
+    }
 };
