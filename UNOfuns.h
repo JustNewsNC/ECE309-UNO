@@ -178,10 +178,6 @@ public:
     virtual void play(Table* table) { //GUI
         int input;
         Card *hold;
-        cout << "You have " << numofcards << " Remaining!" << endl;
-        cout << "Your Cards Are: ";
-        currentCards.Print(); cout << endl;
-        cout << "Top Card on Pile is:"; table->playstack->PrintTop(); cout << endl;
         while (1) {
             cout << endl << "Do you wish to Play a Card or Draw a card?" << endl << "1) Play" << endl << "2) Draw" << endl;
             cin >> input;

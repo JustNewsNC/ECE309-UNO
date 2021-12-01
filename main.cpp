@@ -116,7 +116,7 @@ int main() {
         //PlayTable.playstack->topOfDeck->Action(*turnOrder, *playerList);
         
         cout << currentPlayer.name << " played ";
-        PlayTable.playstack->topOfDeck->Print();
+        PlayTable.playstack->topOfDeck()->Print();
         cout << "." << endl;
 
         if(currentPlayer.numofcards == 1){
