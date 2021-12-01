@@ -5,6 +5,7 @@
 #include "UNOfuns.h"
 #include <vector>
 
+
 using namespace std;
 vector<Player> playerList;
 DrawPile* drawstack = new DrawPile();
@@ -63,7 +64,7 @@ void GameStartNoPlayer(){
 void DrawPile::Deal() {
     for(int i=0; i<7; i++) {
         for(int j=0; j<(int)playerList.size(); j++) {
-            playerList[j].currentCards.Draw();
+            playerList[j].currentCards.Draw(drawstack);
             playerList[j].numofcards++;
             numofcards--;
         }
@@ -89,11 +90,45 @@ int main() {
     drawstack->dcards.pop_back();
     drawstack->numofcards--;
 
-    for(int i=0; i<(int)playerList.size(); i++) { //prints all players card (used to test shuffle, deal, and draw)
-        cout << playerList[i].name << ": ";
-        playerList[i].currentCards.Print();
-        cout << endl;
-        playerList[i].play();
+    cout << "Debug Mode: Y/N" << endl;
+    cin >> input;
+    if(input == 'Y' || input == 'p'){
+        for(int i=0; i<(int)playerList.size(); i++) { //prints all players card (used to test shuffle, deal, and draw)
+            cout << playerList[i].name << ": ";
+            playerList[i].currentCards.Print();
+            cout << endl;
+            playerList[i].play();
+        }
+    }
+    
+    int turnIndex = 0; //turn order
+    int turnCount = 0; //turn count
+    int turnOrder = 1;
+    Player currentPlayer = playerList[turnIndex];
+    while(!winner){
+        currentPlayer = playerList[turnIndex];
+        cout << "Turn: " << turnIndex << " -----------------" << endl;
+        cout << "It is " << currentPlayer.name << "'s turn" << endl;
+        cout << "The current card on top is ";
+        playstack->PrintTop();
+        cout << ". " << endl;
+        
+        currentPlayer.play();
+        //playstack->topOfDeck->Action(*turnOrder, *playerList);
+        
+        cout << currentPlayer.name << " played ";
+        playstack->topOfDeck->Print();
+        cout << "." << endl;
+
+        if(currentPlayer.numofcards == 1){
+            cout << currentPlayer.name << "has UNO!" << endl;
+        } else if(currentPlayer.numofcards == 0) {
+            cout << currentPlayer.name << "has won!" << endl;
+            winner = true;
+        }
+        
+        turnIndex += turnOrder;
+        turnCount++;
     }
 
 
