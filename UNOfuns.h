@@ -15,7 +15,7 @@ int randomnum (int i) { return rand()%i;}
 
 
 class Card {
-public:             //currently public for convenience will fix later
+private:
     char color;
     char type;
     int number;
@@ -164,7 +164,7 @@ public:
         this->name = pname;
         numofcards = 0;
     }
-    virtual void play() {std::cout << "Did base" << std::endl;} //testing which function it calls (remove later)
+    virtual void play(Table* table) {std::cout << "Did base" << std::endl;} //testing which function it calls (remove later)
     void draw(DrawPile* indrawstack) {
         currentCards.Draw(indrawstack);
         numofcards++;
@@ -212,7 +212,7 @@ public:
     CompPlayer(int n): Player("COM ") {
         name += std::to_string(n);
     }
-    virtual void play(Table* table) { //Automatically play/draw cards
+    void play(Table* table) override { //Automatically play/draw cards
         DrawPile* deck = table->drawstack;
         PlayPile* playpile = table->playstack;
         Card* currcard;
