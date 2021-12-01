@@ -11,6 +11,9 @@
 #include <cstdlib>
 
 using std::string;
+using std::cin;
+using std::cout;
+using std::endl;
 int randomnum (int i) { return std::rand()%i;}
 
 class Card {
@@ -132,7 +135,7 @@ public:
         hcards.pop_back();
     }
     void Play(); //Play a card to the play pile
-    void Draw() { //Draw a card from the draw pile
+    void Draw(DrawPile* drawstack) { //Draw a card from the draw pile
         hcards.push_back(drawstack->dcards[drawstack->dcards.size() - 1]); //top of stack is actually end of vector
         length++;
         drawstack->dcards.pop_back();
@@ -162,7 +165,7 @@ public:
 class RealPlayer : public Player{
 public:
     RealPlayer(string a):Player(a){};
-    virtual void play() { //GUI
+    virtual void play(PlayPile* playstack) { //GUI
         int input;
         Card *hold;
         cout << "You have " << numofcards << " Remaining!" << endl;
