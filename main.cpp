@@ -96,7 +96,7 @@ int main() {
             cout << playerList[i].name << ": ";
             playerList[i].currentCards.Print();
             cout << endl;
-            playerList[i].play();
+            playerList[i].play(&PlayTable);
         }
     }
     
@@ -112,7 +112,7 @@ int main() {
         PlayTable.playstack->PrintTop();
         cout << ". " << endl;
         
-        currentPlayer.play();
+        currentPlayer.play(&PlayTable);
         //PlayTable.playstack->topOfDeck->Action(*turnOrder, *playerList);
         
         cout << currentPlayer.name << " played ";
@@ -127,6 +127,11 @@ int main() {
         }
         
         turnIndex += turnOrder;
+        if(turnIndex > playerList.size()){
+            turnIndex = 0;
+        } else if(turnIndex < 0){
+            turnIndex = playerList.size();
+        }
         turnCount++;
     }
 

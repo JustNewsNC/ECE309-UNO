@@ -104,10 +104,7 @@ class PlayPile{ //Cards that have been played
 public:
     std::vector<Card> pcards;
     int length;
-    PlayPile(){
-        length = 0;
-    }
-    Card* topOfDeck() {return &pcards[length - 1];}
+    Card* topOfDeck() {return &pcards.back();}
     void PrintTop(){ //prints top card on play pile
         topOfDeck()->Print();
     }
@@ -155,7 +152,7 @@ struct Table{
     PlayPile* playstack = new PlayPile();
 };
 
-class Player{
+class Player {
 public:
     string name;
     Hand currentCards;
@@ -164,18 +161,20 @@ public:
         this->name = pname;
         numofcards = 0;
     }
-    virtual void play(Table* table) {std::cout << "Did base" << std::endl;} //testing which function it calls (remove later)
     void draw(DrawPile* indrawstack) {
         currentCards.Draw(indrawstack);
         numofcards++;
     }
+    virtual void play(Table* table){
+        cout << "base" << endl;
+    }
 };
 
-class RealPlayer : public Player{
+class RealPlayer : public Player {
 public:
     RealPlayer(string a):Player(a){};
 
-    virtual void play(Table* table) { //GUI
+    void play(Table* table) override { //GUI
         int input;
         Card *hold;
         while (1) {
