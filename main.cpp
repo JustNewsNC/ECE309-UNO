@@ -7,13 +7,8 @@
 
 
 using namespace std;
-vector<Player> playerList;
-
-struct Table{
-    DrawPile* drawstack = new DrawPile();
-    PlayPile* playstack = new PlayPile();
-};
 Table PlayTable = Table();
+vector<Player> playerList;
 
 //fills a vector with the specified amount of bots
 void createPlayers(int amount){
@@ -117,7 +112,7 @@ int main() {
         PlayTable.playstack->PrintTop();
         cout << ". " << endl;
         
-        currentPlayer.play(PlayTable);
+        currentPlayer.play();
         //PlayTable.playstack->topOfDeck->Action(*turnOrder, *playerList);
         
         cout << currentPlayer.name << " played ";
