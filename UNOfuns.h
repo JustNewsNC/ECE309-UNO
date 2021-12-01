@@ -10,8 +10,9 @@
 #include <ctime>
 #include <cstdlib>
 
-using std::string, std::cin, std::cout, std::endl;
-int randomnum (int i) { return std::rand()%i;}
+using namespace std;
+int randomnum (int i) { return rand()%i;}
+
 
 class Card {
 public:             //currently public for convenience will fix later
@@ -37,6 +38,10 @@ public:
     }
     ~Card(){} //destructor
 
+    bool playable(Card* other) {
+        return (color == other->color || (type == other->type && number == other->number));
+    }
+
     void Print() { //prints card information
         if(color == 'R') std::cout << "Red ";
         else if(color == 'B') std::cout << "Blue ";
@@ -49,7 +54,7 @@ public:
         if(type == 'N') std::cout << number;
         else if (type == 'R') std::cout << "Reverse";
         else if (type == 'S') std::cout << "Skip";
-        else std::cout << "Draw 2";
+        else if (type == '2') std::cout << "Draw 2";
     }
 };
 
@@ -57,13 +62,6 @@ class DrawPile{ //Cards to draw/deal from
 private:
     char colors[5] = {'R', 'B', 'G', 'Y', 'W'}; //RED, BLUE, GREEN, YELLOW, WILD
     char types[6] = {'R','S','2', 'C', '4', 'N'}; //REVERSE, SKIP, DRAW 2, CHOOSE, DRAW 4, NUMBER
-public:
-    int numofcards = 0;
-    std::vector<Card> dcards; //top of deck is just cards.end()
-    DrawPile(){
-        CreateDeck();
-        Shuffle();
-    }
     void CreateDeck() {
         for(int i=0; i<4; i++) {
             dcards.push_back(Card(colors[i],'N', 0));
@@ -91,6 +89,13 @@ public:
     void Shuffle() {
         std::srand ( unsigned ( std::time(0) ) );
         std::random_shuffle(dcards.begin(), dcards.end(), randomnum);
+    }
+public:
+    int numofcards = 0;
+    std::vector<Card> dcards; //top of deck is just cards.end()
+    DrawPile(){
+        CreateDeck();
+        Shuffle();
     }
     void Deal(); //Deal starting cards to players
 };
@@ -131,11 +136,10 @@ public:
         }
         hcards.pop_back();
     }
-    void Play(); //Play a card to the play pile
-    void Draw(DrawPile* drawstack) { //Draw a card from the draw pile
-        hcards.push_back(drawstack->dcards[drawstack->dcards.size() - 1]); //top of stack is actually end of vector
+    void Draw(DrawPile* indrawstack) { //Draw a card from the draw pile
+        hcards.push_back(indrawstack->dcards[indrawstack->dcards.size() - 1]); //top of stack is actually end of vector
         length++;
-        drawstack->dcards.pop_back();
+        indrawstack->dcards.pop_back();
     }
     void Print() { //View your current hand
         for(int i=0; i<(int)hcards.size(); i++) {
@@ -144,45 +148,63 @@ public:
             std::cout << ", ";
         }
     }
+    void Play(); //Play a card to the play pile
 };
+
+DrawPile* drawstack = new DrawPile();
 
 class Player{
 public:
     string name;
-    int numofcards;
     Hand currentCards;
+    int numofcards;
     Player(string pname) {
         this->name = pname;
         numofcards = 0;
     }
     virtual void play() {std::cout << "Did base" << std::endl;} //testing which function it calls (remove later)
-
+    virtual void draw(DrawPile* indrawstack) {
+        currentCards.Draw(indrawstack);
+        numofcards++;
+    }
 };
 
 class RealPlayer : public Player{
 public:
     RealPlayer(string a):Player(a){};
-    virtual void play(PlayPile* playstack) { //GUI
+
+    virtual void play(PlayPile* inplaystack) { //GUI
         int input;
         Card *hold;
         cout << "You have " << numofcards << " Remaining!" << endl;
+        cout << "Your Cards Are: ";
+        currentCards.Print(); cout << endl;
+        cout << "Top Card on Pile is:"; inplaystack->PrintTop(); cout << endl;
         while (1) {
-            cout << "Your Cards Are: ";
-            currentCards.Print();
-            cout << endl;
-            cout << "Which Card do you Wish to Play? (please enter card number)" << endl;
+            cout << endl << "Do you wish to Play a Card or Draw a card?" << endl << "1) Play" << endl << "2) Draw" << endl;
             cin >> input;
-            if (input >= 1 && input < currentCards.length + 1) {
-                hold = currentCards.getCard(input - 1);
-                if (hold->color == playstack->topOfDeck->color ||
-                    (hold->type == playstack->topOfDeck->type && hold->number == playstack->topOfDeck->number)) {
-                    playstack->pcards.push_back(*hold);
-                    currentCards.remove(input);
-                    return;
-                }
-                cout << "Unplayable Card" << endl;
-            } else cout << "Invalid Input" << endl;
-            return;
+            if(input == 1) {
+                cout << "Your Cards Are: ";
+                currentCards.Print();
+                cout << endl << "Which Card do you Wish to Play? (please enter card number)" << endl;
+                cin >> input;
+                if (input >= 1 && input < currentCards.length + 1) {
+                    hold = currentCards.getCard(input - 1);
+                    if (hold->playable(inplaystack->topOfDeck)) {
+                        inplaystack->pcards.push_back(*hold);
+                        currentCards.remove(input);
+                        return;
+                    }
+                    cout << "Unplayable Card" << endl;
+                } else cout << "Invalid Input" << endl;
+            }
+            else if(input == 2) {
+                draw(drawstack);
+                cout << "You Drew a "; currentCards.getCard(currentCards.length-1)->Print(); cout << endl;
+                if(currentCards.getCard(currentCards.length-1) )
+                return;
+            }
+            else cout << "Invalid Input" << endl;
         }
     }
 };
