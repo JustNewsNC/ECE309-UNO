@@ -10,10 +10,7 @@
 #include <ctime>
 #include <cstdlib>
 
-using std::string;
-using std::cin;
-using std::cout;
-using std::endl;
+using std::string, std::cin, std::cout, std::endl;
 int randomnum (int i) { return std::rand()%i;}
 
 class Card {
