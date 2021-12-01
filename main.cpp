@@ -8,8 +8,12 @@
 
 using namespace std;
 vector<Player> playerList;
-DrawPile* drawstack = new DrawPile();
-PlayPile* playstack = new PlayPile();
+
+struct Table{
+    DrawPile* drawstack = new DrawPile();
+    PlayPile* playstack = new PlayPile();
+};
+Table PlayTable = Table();
 
 //fills a vector with the specified amount of bots
 void createPlayers(int amount){
@@ -64,7 +68,7 @@ void GameStartNoPlayer(){
 void DrawPile::Deal() {
     for(int i=0; i<7; i++) {
         for(int j=0; j<(int)playerList.size(); j++) {
-            playerList[j].currentCards.Draw(drawstack);
+            playerList[j].currentCards.Draw(PlayTable.drawstack);
             playerList[j].numofcards++;
             numofcards--;
         }
@@ -84,11 +88,11 @@ int main() {
     else {
         GameStartNoPlayer();
     }
-    drawstack->Deal();
-    playstack->pcards.push_back(drawstack->dcards[drawstack->numofcards-1]);
-    playstack->length++;
-    drawstack->dcards.pop_back();
-    drawstack->numofcards--;
+    PlayTable.drawstack->Deal();
+    PlayTable.playstack->pcards.push_back(PlayTable.drawstack->dcards[PlayTable.drawstack->numofcards-1]);
+    PlayTable.playstack->length++;
+    PlayTable.drawstack->dcards.pop_back();
+    PlayTable.drawstack->numofcards--;
 
     cout << "Debug Mode: Y/N" << endl;
     cin >> input;
@@ -110,14 +114,14 @@ int main() {
         cout << "Turn: " << turnIndex << " -----------------" << endl;
         cout << "It is " << currentPlayer.name << "'s turn" << endl;
         cout << "The current card on top is ";
-        playstack->PrintTop();
+        PlayTable.playstack->PrintTop();
         cout << ". " << endl;
         
-        currentPlayer.play();
-        //playstack->topOfDeck->Action(*turnOrder, *playerList);
+        currentPlayer.play(PlayTable);
+        //PlayTable.playstack->topOfDeck->Action(*turnOrder, *playerList);
         
         cout << currentPlayer.name << " played ";
-        playstack->topOfDeck->Print();
+        PlayTable.playstack->topOfDeck->Print();
         cout << "." << endl;
 
         if(currentPlayer.numofcards == 1){
@@ -136,11 +140,11 @@ int main() {
     Player* currentPlayer = nullptr;
     
     while(!winner){
-        cout << "The card on top is: "; playstack->PrintTop(); cout << endl;
+        cout << "The card on top is: "; PlayTable.playstack->PrintTop(); cout << endl;
         currentPlayer = &playerList[playerIndex];
         cout << "It is " << currentPlayer->name << "'s turn" << endl;
         //currentPlayer->play(); //play function differs between AI and humans
-        cout << currentPlayer->name << " played "; playstack->PrintTop(); cout << endl;
+        cout << currentPlayer->name << " played "; PlayTable.playstack->PrintTop(); cout << endl;
         if(currentPlayer->currentCards.length == 0){
             cout << currentPlayer->name << " has won!" << endl;
             winner = true;
