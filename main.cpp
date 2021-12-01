@@ -59,11 +59,6 @@ void GameStartNoPlayer(){
     createPlayers(playerCount); //need to initialize playerCount
 }
 
-void Hand::Draw() {
-    hcards.push_back(drawstack->dcards[drawstack->dcards.size()-1]); //top of stack is actually end of vector
-    length++;
-    drawstack->dcards.pop_back();
-}
 
 void DrawPile::Deal() {
     for(int i=0; i<7; i++) {
@@ -75,29 +70,7 @@ void DrawPile::Deal() {
     }
 }
 
-void RealPlayer::play() {
-    int input;
-    Card* hold;
-    cout << "You have " << numofcards << " Remaining!" << endl;
-    while(1) {
-        cout << "Your Cards Are: ";
-        currentCards.Print();
-        cout << endl;
-        cout << "Which Card do you Wish to Play? (please enter card number)" << endl;
-        cin >> input;
-        if(input >= 1 && input < currentCards.length + 1) {
-            hold = currentCards.getCard(input-1);
-            if(hold->color == playstack->topOfDeck->color || (hold->type == playstack->topOfDeck->type && hold->number == playstack->topOfDeck->number)) {
-                playstack->pcards.push_back(*hold);
-                currentCards.remove(input);
-                return;
-            }
-            cout << "Unplayable Card" << endl;
-        }
-        else cout << "Invalid Input" << endl;
-        return;
-    }
-}
+
 
 int main() {
     char input;
@@ -120,7 +93,7 @@ int main() {
         cout << playerList[i].name << ": ";
         playerList[i].currentCards.Print();
         cout << endl;
-        playerList[i].play(); // I can't get the compiler to call the RealPlayer.play()
+        playerList[i].play();
     }
 
 

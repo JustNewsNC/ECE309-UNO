@@ -132,7 +132,11 @@ public:
         hcards.pop_back();
     }
     void Play(); //Play a card to the play pile
-    void Draw(); //Draw a card from the draw pile
+    void Draw() { //Draw a card from the draw pile
+        hcards.push_back(drawstack->dcards[drawstack->dcards.size() - 1]); //top of stack is actually end of vector
+        length++;
+        drawstack->dcards.pop_back();
+    }
     void Print() { //View your current hand
         for(int i=0; i<(int)hcards.size(); i++) {
             std::cout << i+1 << ") ";
@@ -158,7 +162,29 @@ public:
 class RealPlayer : public Player{
 public:
     RealPlayer(string a):Player(a){};
-    virtual void play(); //GUI
+    virtual void play() { //GUI
+        int input;
+        Card *hold;
+        cout << "You have " << numofcards << " Remaining!" << endl;
+        while (1) {
+            cout << "Your Cards Are: ";
+            currentCards.Print();
+            cout << endl;
+            cout << "Which Card do you Wish to Play? (please enter card number)" << endl;
+            cin >> input;
+            if (input >= 1 && input < currentCards.length + 1) {
+                hold = currentCards.getCard(input - 1);
+                if (hold->color == playstack->topOfDeck->color ||
+                    (hold->type == playstack->topOfDeck->type && hold->number == playstack->topOfDeck->number)) {
+                    playstack->pcards.push_back(*hold);
+                    currentCards.remove(input);
+                    return;
+                }
+                cout << "Unplayable Card" << endl;
+            } else cout << "Invalid Input" << endl;
+            return;
+        }
+    }
 };
 
 class CompPlayer : public Player{
