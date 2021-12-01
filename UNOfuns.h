@@ -54,7 +54,7 @@ public:
         if(type == 'N') std::cout << number;
         else if (type == 'R') std::cout << "Reverse";
         else if (type == 'S') std::cout << "Skip";
-        else std::cout << "Draw 2";
+        else if (type == '2') std::cout << "Draw 2";
     }
 };
 
@@ -156,25 +156,29 @@ DrawPile* drawstack = new DrawPile();
 class Player{
 public:
     string name;
-    int numofcards;
     Hand currentCards;
+    int numofcards;
     Player(string pname) {
         this->name = pname;
         numofcards = 0;
     }
     virtual void play() {std::cout << "Did base" << std::endl;} //testing which function it calls (remove later)
-
+    virtual void draw(DrawPile* indrawstack) {
+        currentCards.Draw(indrawstack);
+        numofcards++;
+    }
 };
 
 class RealPlayer : public Player{
 public:
     RealPlayer(string a):Player(a){};
+
     virtual void play(PlayPile* inplaystack) { //GUI
         int input;
         Card *hold;
         cout << "You have " << numofcards << " Remaining!" << endl;
         cout << "Your Cards Are: ";
-        currentCards.Print();
+        currentCards.Print(); cout << endl;
         cout << "Top Card on Pile is:"; inplaystack->PrintTop(); cout << endl;
         while (1) {
             cout << endl << "Do you wish to Play a Card or Draw a card?" << endl << "1) Play" << endl << "2) Draw" << endl;
@@ -195,7 +199,7 @@ public:
                 } else cout << "Invalid Input" << endl;
             }
             else if(input == 2) {
-                currentCards.Draw(drawstack);
+                draw(drawstack);
                 cout << "You Drew a "; currentCards.getCard(currentCards.length-1)->Print(); cout << endl;
                 if(currentCards.getCard(currentCards.length-1) )
                 return;
