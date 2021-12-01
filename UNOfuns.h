@@ -151,7 +151,10 @@ public:
     void Play(); //Play a card to the play pile
 };
 
-DrawPile* drawstack = new DrawPile();
+struct Table{
+    DrawPile* drawstack = new DrawPile();
+    PlayPile* playstack = new PlayPile();
+};
 
 class Player{
 public:
@@ -163,7 +166,7 @@ public:
         numofcards = 0;
     }
     virtual void play() {std::cout << "Did base" << std::endl;} //testing which function it calls (remove later)
-    virtual void draw(DrawPile* indrawstack) {
+    void draw(DrawPile* indrawstack) {
         currentCards.Draw(indrawstack);
         numofcards++;
     }
@@ -173,13 +176,13 @@ class RealPlayer : public Player{
 public:
     RealPlayer(string a):Player(a){};
 
-    virtual void play(PlayPile* inplaystack) { //GUI
+    virtual void play(Table* table) { //GUI
         int input;
         Card *hold;
         cout << "You have " << numofcards << " Remaining!" << endl;
         cout << "Your Cards Are: ";
         currentCards.Print(); cout << endl;
-        cout << "Top Card on Pile is:"; inplaystack->PrintTop(); cout << endl;
+        cout << "Top Card on Pile is:"; table->playstack->PrintTop(); cout << endl;
         while (1) {
             cout << endl << "Do you wish to Play a Card or Draw a card?" << endl << "1) Play" << endl << "2) Draw" << endl;
             cin >> input;
@@ -190,8 +193,8 @@ public:
                 cin >> input;
                 if (input >= 1 && input < currentCards.length + 1) {
                     hold = currentCards.getCard(input - 1);
-                    if (hold->playable(inplaystack->topOfDeck)) {
-                        inplaystack->pcards.push_back(*hold);
+                    if (hold->playable(table->playstack->topOfDeck)) {
+                        table->playstack->pcards.push_back(*hold);
                         currentCards.remove(input);
                         return;
                     }
@@ -199,7 +202,7 @@ public:
                 } else cout << "Invalid Input" << endl;
             }
             else if(input == 2) {
-                draw(drawstack);
+                draw(table->drawstack);
                 cout << "You Drew a "; currentCards.getCard(currentCards.length-1)->Print(); cout << endl;
                 if(currentCards.getCard(currentCards.length-1) )
                 return;
@@ -214,5 +217,5 @@ public:
     CompPlayer(int n): Player("COM ") {
         name += std::to_string(n);
     }
-    virtual void play() {}; //Automatically play/dray cards
+    virtual void play() {}; //Automatically play/draw cards
 };
