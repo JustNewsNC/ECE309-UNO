@@ -123,7 +123,7 @@ int main() {
     Player* currentPlayer = playerList[turnIndex];
     while(!winner){
         currentPlayer = playerList[turnIndex];
-        cout << "Turn: " << turnIndex << " -----------------" << endl;
+        cout << "Turn: " << turnCount << " -----------------" << endl;
         cout << "It is " << currentPlayer->name << "'s turn" << endl;
         cout << "The current card on top is ";
         PlayTable.playstack->PrintTop();
@@ -144,10 +144,10 @@ int main() {
         }
         
         turnIndex += turnOrder;
-        if(turnIndex > playerList.size()){
+        if(turnIndex >= playerList.size()){
             turnIndex = 0;
-        } else if(turnIndex < 0){
-            turnIndex = playerList.size();
+        } else if(turnIndex <= 0){
+            turnIndex = playerList.size() - 1;
         }
         turnCount++;
     }
