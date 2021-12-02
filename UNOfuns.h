@@ -39,7 +39,7 @@ public:
     ~Card(){} //destructor
 
     bool playable(Card* other) {
-        return (color == other->color || (type == other->type && number == other->number));
+        return (color == 'W' || color == other->color || (type == other->type && number == other->number));
     }
 
     void Print() { //prints card information
@@ -92,13 +92,14 @@ private:
     }
 public:
     int numofcards = 0;
-    std::vector<Card> dcards; //top of deck is just cards.end()
+    std::vector<Card> dcards; //top of deck is just cards.back()
     DrawPile(){
         CreateDeck();
         Shuffle();
     }
     DrawPile(vector<Card> tmp) {
         dcards = tmp;
+        numofcards = tmp.size();
         Shuffle();
     }
     bool isEmpty() { //returns whether deck is empty
@@ -122,6 +123,7 @@ public:
         vector<Card> temp = pcards;
         pcards.clear();
         length = 0;
+        pcards.push_back(hold);
         DrawPile* newdraw = new DrawPile(temp);
         return newdraw;
     }
@@ -153,6 +155,7 @@ public:
         hcards.push_back(indrawstack->dcards[indrawstack->dcards.size() - 1]); //top of stack is actually end of vector
         length++;
         indrawstack->dcards.pop_back();
+        indrawstack->numofcards--;
     }
     void Print() { //View your current hand
         for(int i=0; i<(int)hcards.size(); i++) {
@@ -211,6 +214,9 @@ public:
                         table->playstack->pcards.push_back(*hold);
                         currentCards.remove(input-1);
                         numofcards--;
+                        cout << name << " played ";
+                        table->playstack->topOfDeck()->Print();
+                        cout << "." << endl;
                         return;
                     }
                     cout << "Unplayable Card" << endl;
@@ -219,13 +225,16 @@ public:
             else if(input == 2) {
                 draw(table->drawstack);
                 if(table->drawstack->isEmpty()) {
-                    table->playstack->ReturnToDrawPile();
+                    table->drawstack = table->playstack->ReturnToDrawPile();
                 }
                 cout << "You Drew a "; currentCards.getCard(currentCards.length-1)->Print(); cout << endl;
                 if(currentCards.getCard(currentCards.length-1)->playable(table->playstack->topOfDeck())) {
                     hold = currentCards.getCard(currentCards.length-1);
                     table->playstack->pcards.push_back(*hold);
                     currentCards.remove(currentCards.length-1);
+                    cout << name << " played ";
+                    table->playstack->topOfDeck()->Print();
+                    cout << "." << endl;
                     numofcards--;
                     return;
                 }
@@ -251,19 +260,26 @@ public:
             if(currcard->playable(playpile->topOfDeck())) {
                 playpile->pcards.push_back(*currcard);
                 currentCards.remove(i);
+                cout << name << " played ";
+                table->playstack->topOfDeck()->Print();
+                cout << "." << endl;
                 numofcards--;
                 return;
             }
         }
 
         draw(deck); //if no playable cards, draw a card from the deck
+        cout << name << " drew." << endl;
         if(table->drawstack->isEmpty()) {
-            table->playstack->ReturnToDrawPile();
+            table->drawstack = table->playstack->ReturnToDrawPile();
         }
         currcard = currentCards.getCard(currentCards.length - 1);
         if(currcard->playable(playpile->topOfDeck())) { //if card is then playable, then play it. Otherwise return
             playpile->pcards.push_back(*currcard);
             currentCards.remove(currentCards.length - 1);
+            cout << name << " played ";
+            table->playstack->topOfDeck()->Print();
+            cout << "." << endl;
         }
     }
 };

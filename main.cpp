@@ -101,14 +101,12 @@ int main() {
             playerList[i]->play(&PlayTable);
         }
 
-        CompPlayer Sam = CompPlayer(1);
+        RealPlayer Sam = RealPlayer("Sam");
         Player* ptr = &Sam;
-        for(int i=0; i<7; i++) ptr->draw(PlayTable.drawstack);
-        for(int i=0; i<4; i++) {
-            cout << "The current card on top is ";
-            PlayTable.playstack->PrintTop();
-            cout << ". " << endl;
-            ptr->currentCards.Print();
+        for(int i=0; i<60; i++) ptr->draw(PlayTable.drawstack);
+        int given = 1;
+        while(given != 0) {
+            cin >> given;
             ptr->play(&PlayTable);
         }
         cout << "The current card on top is ";
@@ -131,10 +129,7 @@ int main() {
         
         currentPlayer->play(&PlayTable);
         //PlayTable.playstack->topOfDeck->Action(*turnOrder, *playerList);
-        
-        cout << currentPlayer->name << " played ";
-        PlayTable.playstack->topOfDeck()->Print();
-        cout << "." << endl;
+
 
         if(currentPlayer->numofcards == 1){
             cout << currentPlayer->name << " has UNO!" << endl;
