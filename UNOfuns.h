@@ -254,7 +254,7 @@ public:
 
     virtual char wildcolor() override { //asks player for color choice for wild
         char hold;
-        cout << "What Color would you like?" << endl;
+        cout << "What Color would you like? (R, Y, G, B)" << endl;
         cin >> hold;
         return hold;
     }

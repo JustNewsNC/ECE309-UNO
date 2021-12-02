@@ -57,9 +57,9 @@ void GameStartWithPlayer(){
 void GameStartNoPlayer(){
     int playerCount = 0;
     while(1) {
-        cout << "How many computers would you like to see play? (2 to 7)" << endl;
+        cout << "How many computers would you like to see play? (2 to 4)" << endl;
         cin >> playerCount;
-        if(playerCount >= 2 && playerCount <= 7) { //Game works best with between 2 to 7 players.
+        if(playerCount >= 2 && playerCount <= 4) { //Game works best with between 2 to 7 players.
             createPlayers(playerCount);
             return;
         }
