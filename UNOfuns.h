@@ -108,7 +108,7 @@ public:
     void PrintTop(){ //prints top card on play pile
         topOfDeck()->Print();
     }
-    void ReturnToDrawPile(){} //return played cards back to the draw pile
+    void ReturnToDrawPile(); //return played cards back to the draw pile
 };
 
 //player's cards
@@ -130,6 +130,7 @@ public:
             hcards[index] = hcards[(int)hcards.size()-1];
             hcards[(int)hcards.size()-1] = hold;
         }
+        length--;
         hcards.pop_back();
     }
     void Draw(DrawPile* indrawstack) { //Draw a card from the draw pile
@@ -178,6 +179,8 @@ public:
     virtual void play(Table* table) override { //GUI
         int input;
         Card *hold;
+        cout << "Your Cards Are: ";
+        currentCards.Print();
         while (1) {
             cout << endl << "Do you wish to Play a Card or Draw a card?" << endl << "1) Play" << endl << "2) Draw" << endl;
             cin >> input;
@@ -190,7 +193,8 @@ public:
                     hold = currentCards.getCard(input - 1);
                     if (hold->playable(table->playstack->topOfDeck())) {
                         table->playstack->pcards.push_back(*hold);
-                        currentCards.remove(input);
+                        currentCards.remove(input-1);
+                        numofcards--;
                         return;
                     }
                     cout << "Unplayable Card" << endl;
@@ -199,7 +203,13 @@ public:
             else if(input == 2) {
                 draw(table->drawstack);
                 cout << "You Drew a "; currentCards.getCard(currentCards.length-1)->Print(); cout << endl;
-                if(currentCards.getCard(currentCards.length-1) )
+                if(currentCards.getCard(currentCards.length-1)->playable(table->playstack->topOfDeck())) {
+                    hold = currentCards.getCard(currentCards.length-1);
+                    table->playstack->pcards.push_back(*hold);
+                    currentCards.remove(currentCards.length-1);
+                    numofcards--;
+                    return;
+                }
                 return;
             }
             else cout << "Invalid Input" << endl;
@@ -222,6 +232,7 @@ public:
             if(currcard->playable(playpile->topOfDeck())) {
                 playpile->pcards.push_back(*currcard);
                 currentCards.remove(i);
+                numofcards--;
                 return;
             }
         }
