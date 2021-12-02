@@ -84,12 +84,17 @@ int main() {
     char input;
     bool winner = false;
     cout << "Are you a player or spectator? (P/S)" << endl;
-    cin >> input;
-    if(input == 'P' || input == 'p'){
-        GameStartWithPlayer();
-    }
-    else {
-        GameStartNoPlayer();
+    while(1) {
+        cin >> input;
+        if (input == 'P' || input == 'p') {
+            GameStartWithPlayer();
+            break;
+        }
+        else if (input == 'S' || input == 's') {
+            GameStartNoPlayer();
+            break;
+        }
+        cout << "Please Enter Valid Mode" << endl;
     }
     PlayTable.drawstack->Deal();
     PlayTable.playstack->pcards.push_back(PlayTable.drawstack->dcards[PlayTable.drawstack->numofcards-1]);

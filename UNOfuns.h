@@ -167,6 +167,7 @@ public:
     int length;
     Hand(){
         length = 0;
+        hcards.clear();
     }
     Card* getCard(int i) {
         return &hcards[i]; //used to access card in hand
@@ -309,9 +310,12 @@ public:
 
     virtual char wildcolor() override { //asks player for color choice for wild
         char hold;
-        cout << "What Color would you like? (R, Y, G, B)" << endl;
-        cin >> hold;
-        return hold;
+        cout << "What Color would you like?" << endl << "Red (R), Yellow (Y), Green (G), Blue (B)" << endl;
+        while(1) {
+            cin >> hold;
+            if(hold == 'R' || hold == 'Y' || hold == 'G' || hold == 'B') return hold;
+            cout << "Please Enter Valid Color" << endl;
+        }
     }
     RealPlayer(const RealPlayer &other) : Player(other) {} //copy constructor
     RealPlayer& operator= (const RealPlayer &other) { //assignment operator
@@ -398,6 +402,7 @@ void Action(Card* played, int &turnOrder, int &turnIndex, vector<Player*> &playe
         } else if(turnIndex < 0){
             turnIndex = (int)playerList.size() - 1;
         }
+        cout << playerList[turnIndex]->name << " was SKIPPED." << endl;
     }
     else if(played->cardtype() == 'C') {        //calls wildcolor() for player to choose color for wild
         char hold = playerList[turnIndex]->wildcolor();
