@@ -56,14 +56,20 @@ void GameStartWithPlayer(){
 //setups a game for spectators
 void GameStartNoPlayer(){
     int playerCount = 0;
-    cout << "How many computers would you like to see play?" << endl;
-    cin >> playerCount;
-    createPlayers(playerCount); //need to initialize playerCount
+    while(1) {
+        cout << "How many computers would you like to see play? (2 to 7)" << endl;
+        cin >> playerCount;
+        if(playerCount >= 2 && playerCount <= 7) { //Game works best with between 2 to 7 players.
+            createPlayers(playerCount);
+            return;
+        }
+        cout << "Please Enter Valid Number." << endl;
+    }
 }
 
 
 void DrawPile::Deal() {
-    for(int i=0; i<7; i++) {
+    for(int i=0; i<7; i++) { //deals out 7 cards to each player
         for(int j=0; j<(int)playerList.size(); j++) {
             playerList[j]->currentCards.Draw(PlayTable.drawstack);
             playerList[j]->numofcards++;
@@ -91,7 +97,7 @@ int main() {
     PlayTable.drawstack->dcards.pop_back();
     PlayTable.drawstack->numofcards--;
 
-    cout << "Debug Mode: Y/N" << endl;
+    /*cout << "Debug Mode: Y/N" << endl;
     cin >> input;
     if(input == 'Y' || input == 'p'){
         for(int i=0; i<(int)playerList.size(); i++) { //prints all players card (used to test shuffle, deal, and draw)
@@ -113,7 +119,7 @@ int main() {
         PlayTable.playstack->PrintTop();
         cout << ". " << endl;
 
-    }
+    } */  //Can Probably Be Deleted Soon
     
     int turnIndex = 0; //turn order
     int turnCount = 0; //turn count
@@ -129,41 +135,26 @@ int main() {
         cout << ". " << endl;
         
         cardplayed = currentPlayer->play(&PlayTable);
-        if(cardplayed) Action(PlayTable.playstack->topOfDeck(), turnOrder, turnIndex, playerList, &PlayTable);
+        if(cardplayed) { //checks if card is played
+            Action(PlayTable.playstack->topOfDeck(), turnOrder, turnIndex, playerList, &PlayTable);
+        }
 
-        if(currentPlayer->numofcards == 1){
+        if(currentPlayer->numofcards == 1){ //shows if a player has UNO
             cout << currentPlayer->name << " has UNO!" << endl;
-        } else if(currentPlayer->numofcards == 0) {
+        } else if(currentPlayer->numofcards == 0) { //declares a winner
             cout << currentPlayer->name << " has won!" << endl;
             winner = true;
         }
         
-        turnIndex += turnOrder;
-        if(turnIndex >= (int)playerList.size()){
+        turnIndex += turnOrder; //increments player in vector
+        if(turnIndex >= (int)playerList.size()){ //loops around back to zero
             turnIndex = 0;
-        } else if(turnIndex < 0){
+        } else if(turnIndex < 0){ //loops around to end of list in case of reverse order
             turnIndex = (int)playerList.size() - 1;
         }
         turnCount++;
     }
 
-
-    /*int playerIndex = 0;
-    Player* currentPlayer = nullptr;
-    
-    while(!winner){
-        cout << "The card on top is: "; PlayTable.playstack->PrintTop(); cout << endl;
-        currentPlayer = &playerList[playerIndex];
-        cout << "It is " << currentPlayer->name << "'s turn" << endl;
-        //currentPlayer->play(); //play function differs between AI and humans
-        cout << currentPlayer->name << " played "; PlayTable.playstack->PrintTop(); cout << endl;
-        if(currentPlayer->currentCards.length == 0){
-            cout << currentPlayer->name << " has won!" << endl;
-            winner = true;
-        }
-        if(playerIndex < (int)playerList.size()-1) playerIndex++;
-        else playerIndex = 0;
-    }*/
     return 0;
 }
 
