@@ -32,6 +32,7 @@ public:
         number = other.number;
     }
     Card& operator= (const Card &other) { //assignment operator
+        if(&other == this) return *this;
         color = other.color;
         type = other.type;
         number = other.number;
@@ -108,6 +109,18 @@ public:
     }
     void Deal(); //Deal starting cards to players
 
+    DrawPile(const DrawPile &other) { //copy constructor
+        numofcards = other.numofcards;
+        dcards = other.dcards;
+    }
+    DrawPile& operator= (const DrawPile &other) { //assignment operator
+        if(&other == this) return *this;
+        numofcards = other.numofcards;
+        dcards = other.dcards;
+        return *this;
+    }
+    ~DrawPile(){} //destructor
+
 };
 
 class PlayPile{ //Cards that have been played
@@ -115,6 +128,10 @@ public:
     std::vector<Card> pcards;
     int length;
     Card* topOfDeck() {return &pcards.back();}
+    PlayPile() {
+        pcards.clear();
+        length = 0;
+    }
     void PrintTop(){ //prints top card on play pile
         topOfDeck()->Print();
     }
@@ -128,6 +145,18 @@ public:
         DrawPile* newdraw = new DrawPile(temp); //takes the old playpile and converts to DrawPile to be shuffle and returned to deck
         return newdraw;
     }
+
+    PlayPile(const PlayPile &other) { //copy constructor
+        length = other.length;
+        pcards = other.pcards;
+    }
+    PlayPile& operator= (const PlayPile &other) { //assignment operator
+        if(&other == this) return *this;
+        length = other.length;
+        pcards = other.pcards;
+        return *this;
+    }
+    ~PlayPile(){} //destructor
 };
 
 //player's cards
@@ -166,6 +195,18 @@ public:
         }
         cout << endl;
     }
+
+    Hand(const Hand &other) { //copy constructor
+        length = other.length;
+        hcards = other.hcards;
+    }
+    Hand& operator= (const Hand &other) { //assignment operator
+        if(&other == this) return *this;
+        length = other.length;
+        hcards = other.hcards;
+        return *this;
+    }
+    ~Hand(){} //destructor
 };
 
 struct Table{
@@ -199,6 +240,20 @@ public:
             table->playstack->topOfDeck()->color = 'W';
         }
     }
+
+    Player(const Player &other) { //copy constructor
+        name = other.name;
+        numofcards = other.numofcards;
+        currentCards = other.currentCards;
+    }
+    Player& operator= (const Player &other) { //assignment operator
+        if(&other == this) return *this;
+        name = other.name;
+        numofcards = other.numofcards;
+        currentCards = other.currentCards;
+        return *this;
+    }
+    ~Player(){} //destructor
 };
 
 class RealPlayer : public Player {
@@ -258,7 +313,13 @@ public:
         cin >> hold;
         return hold;
     }
-
+    RealPlayer(const RealPlayer &other) : Player(other) {} //copy constructor
+    RealPlayer& operator= (const RealPlayer &other) { //assignment operator
+        if(&other == this) return *this;
+        Player::operator= (other);
+        return *this;
+    }
+    ~RealPlayer(){} //destructor
 };
 
 class CompPlayer : public Player{
@@ -307,6 +368,14 @@ public:
         char colors[4] = {'R','B','G','Y'};
         return colors[randnum];
     }
+
+    CompPlayer(const CompPlayer &other) : Player(other) {} //copy constructor
+    CompPlayer& operator= (const CompPlayer &other) { //assignment operator
+        if(&other == this) return *this;
+        Player::operator= (other);
+        return *this;
+    }
+    ~CompPlayer(){} //destructor
 };
 
 void Action(Card* played, int &turnOrder, int &turnIndex, vector<Player*> &playerList, Table* table) {
