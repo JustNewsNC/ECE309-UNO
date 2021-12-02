@@ -129,7 +129,7 @@ int main() {
         cout << ". " << endl;
         
         cardplayed = currentPlayer->play(&PlayTable);
-        Action(PlayTable.playstack->topOfDeck(), &playerList);
+        if(cardplayed) Action(PlayTable.playstack->topOfDeck(), turnOrder, turnIndex, &playerList);
 
 
         if(currentPlayer->numofcards == 1){
@@ -140,10 +140,10 @@ int main() {
         }
         
         turnIndex += turnOrder;
-        if(turnIndex >= playerList.size()){
+        if(turnIndex >= (int)playerList.size()){
             turnIndex = 0;
-        } else if(turnIndex <= 0){
-            turnIndex = playerList.size() - 1;
+        } else if(turnIndex < 0){
+            turnIndex = (int)playerList.size() - 1;
         }
         turnCount++;
     }

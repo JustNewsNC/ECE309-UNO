@@ -80,12 +80,12 @@ private:
                 numofcards+=2;
             }
         }
-        for(int i=0; i<2; i++) {
+        /*for(int i=0; i<2; i++) {
             for(int j=0; j<4; j++) {
                 dcards.push_back(Card('W',types[3+i], -1));
                 numofcards++;
             }
-        }
+        }*/
     }
     void Shuffle() {
         std::srand ( unsigned ( std::time(0) ) );
@@ -288,6 +288,18 @@ public:
     }
 };
 
-void Action(Card* played, vector<Player*> *playerList) {
-    if(played->cardtype() == 'N') return;
+void Action(Card* played, int &turnOrder, int &turnIndex, vector<Player*> *playerList) {
+    if(played->cardtype() == 'N');
+    else if(played->cardtype() == 'R') {
+        turnOrder *= (-1);
+    }
+    else if(played->cardtype() == 'S') {
+        turnIndex += turnOrder;
+        if(turnIndex >= (int)playerList->size()){
+            turnIndex = 0;
+        } else if(turnIndex < 0){
+            turnIndex = (int)playerList->size() - 1;
+        }
+    }
+
 }
