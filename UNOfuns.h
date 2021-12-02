@@ -16,10 +16,10 @@ int randomnum (int i) { return rand()%i;}
 
 class Card {
 private:
-    char color;
     char type;
     int number;
 public:
+    char color;
     Card(char c = 'n', char t = 'n', int num = -1){ //n is for none, -1 is for none
         color = c;
         type = t;
@@ -80,12 +80,12 @@ private:
                 numofcards+=2;
             }
         }
-        /*for(int i=0; i<2; i++) {
+        for(int i=0; i<2; i++) {
             for(int j=0; j<4; j++) {
                 dcards.push_back(Card('W',types[3+i], -1));
                 numofcards++;
             }
-        }*/
+        }
     }
     void Shuffle() {
         std::srand ( unsigned ( std::time(0) ) );
@@ -192,6 +192,14 @@ public:
         cout << "base" << endl;
         return false;
     }
+
+    virtual char wildcolor() {return 'W';}
+
+    void FixWild(Table* table) {
+        if(table->playstack->topOfDeck()->cardtype() == 'C' || table->playstack->topOfDeck()->cardtype() == '4') {
+            table->playstack->topOfDeck()->color = 'W';
+        }
+    }
 };
 
 class RealPlayer : public Player {
@@ -214,6 +222,7 @@ public:
                 if (input >= 1 && input < currentCards.length + 1) {
                     hold = currentCards.getCard(input - 1);
                     if (hold->playable(table->playstack->topOfDeck())) {
+                        FixWild(table);
                         table->playstack->pcards.push_back(*hold);
                         currentCards.remove(input-1);
                         numofcards--;
@@ -232,6 +241,7 @@ public:
                 }
                 cout << "You Drew a "; currentCards.getCard(currentCards.length-1)->Print(); cout << endl;
                 if(currentCards.getCard(currentCards.length-1)->playable(table->playstack->topOfDeck())) {
+                    FixWild(table);
                     hold = currentCards.getCard(currentCards.length-1);
                     table->playstack->pcards.push_back(*hold);
                     currentCards.remove(currentCards.length-1);
@@ -246,6 +256,14 @@ public:
             else cout << "Invalid Input" << endl;
         }
     }
+
+    virtual char wildcolor() override {
+        char hold;
+        cout << "What Color would you like?" << endl;
+        cin >> hold;
+        return hold;
+    }
+
 };
 
 class CompPlayer : public Player{
@@ -261,6 +279,7 @@ public:
         for(int i=0; i<currentCards.length; i++) { //find first playable card in computers hand
             currcard = currentCards.getCard(i);
             if(currcard->playable(playpile->topOfDeck())) {
+                FixWild(table);
                 playpile->pcards.push_back(*currcard);
                 currentCards.remove(i);
                 cout << name << " played ";
@@ -277,6 +296,7 @@ public:
         }
         currcard = currentCards.getCard(currentCards.length - 1);
         if(currcard->playable(playpile->topOfDeck())) { //if card is then playable, then play it. Otherwise return
+            FixWild(table);
             playpile->pcards.push_back(*currcard);
             currentCards.remove(currentCards.length - 1);
             cout << name << " played ";
@@ -285,6 +305,15 @@ public:
             return true;
         }
         return false;
+    }
+
+    virtual char wildcolor() override {
+        for(int i=0; i<currentCards.length; i++) {
+            if(currentCards.getCard(i)->color != 'W') return currentCards.getCard(i)->color;
+        }
+        int randnum = rand() % 4;
+        char colors[4] = {'R','B','G','Y'};
+        return colors[randnum];
     }
 };
 
@@ -309,7 +338,13 @@ void Action(Card* played, int &turnOrder, int &turnIndex, vector<Player*> &playe
             turnIndex = (int)playerList.size() - 1;
         }
     }
+    else if(played->cardtype() == 'C') {
+        char hold = playerList[turnIndex]->wildcolor();
+        table->playstack->topOfDeck()->color = hold;
+    }
     else if(played->cardtype() == '4') {
+        char hold = playerList[turnIndex]->wildcolor();
+        table->playstack->topOfDeck()->color = hold;
         turnIndex += turnOrder;
         if(turnIndex >= (int)playerList.size()){
             turnIndex = 0;
