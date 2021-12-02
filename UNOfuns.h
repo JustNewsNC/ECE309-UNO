@@ -139,10 +139,11 @@ public:
     }
     void Print() { //View your current hand
         for(int i=0; i<(int)hcards.size(); i++) {
+            std::cout << endl;
             std::cout << i+1 << ") ";
             hcards[i].Print();
-            std::cout << ", ";
         }
+        cout << endl;
     }
     void Play(); //Play a card to the play pile
 };
