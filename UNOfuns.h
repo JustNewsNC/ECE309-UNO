@@ -25,6 +25,7 @@ public:
         type = t;
         number = num; //-1 symbolizes that its not a number card (reverse, skip, draw, wild)
     }
+    char cardtype() {return type;}
     Card(const Card &other) { //copy constructor
         color = other.color;
         type = other.type;
@@ -186,8 +187,9 @@ public:
         currentCards.Draw(indrawstack);
         numofcards++;
     }
-    virtual void play(Table* table){
+    virtual bool play(Table* table){
         cout << "base" << endl;
+        return false;
     }
 };
 
@@ -195,7 +197,7 @@ class RealPlayer : public Player {
 public:
     RealPlayer(string a):Player(a){};
 
-    virtual void play(Table* table) override { //GUI
+    virtual bool play(Table* table) override { //GUI
         int input;
         Card *hold;
         cout << "Your Cards Are: ";
@@ -217,7 +219,7 @@ public:
                         cout << name << " played ";
                         table->playstack->topOfDeck()->Print();
                         cout << "." << endl;
-                        return;
+                        return true;
                     }
                     cout << "Unplayable Card" << endl;
                 } else cout << "Invalid Input" << endl;
@@ -236,9 +238,9 @@ public:
                     table->playstack->topOfDeck()->Print();
                     cout << "." << endl;
                     numofcards--;
-                    return;
+                    return true;
                 }
-                return;
+                return false;
             }
             else cout << "Invalid Input" << endl;
         }
@@ -250,7 +252,7 @@ public:
     CompPlayer(int n): Player("COM ") {
         name += std::to_string(n);
     }
-    virtual void play(Table* table) override { //Automatically play/draw cards
+    virtual bool play(Table* table) override { //Automatically play/draw cards
         DrawPile* deck = table->drawstack;
         PlayPile* playpile = table->playstack;
         Card* currcard;
@@ -264,7 +266,7 @@ public:
                 table->playstack->topOfDeck()->Print();
                 cout << "." << endl;
                 numofcards--;
-                return;
+                return true;
             }
         }
 
@@ -280,6 +282,12 @@ public:
             cout << name << " played ";
             table->playstack->topOfDeck()->Print();
             cout << "." << endl;
+            return true;
         }
+        return false;
     }
 };
+
+void Action(Card* played, vector<Player*> *playerList) {
+    if(played->cardtype() == 'N') return;
+}

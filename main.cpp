@@ -118,6 +118,7 @@ int main() {
     int turnIndex = 0; //turn order
     int turnCount = 0; //turn count
     int turnOrder = 1;
+    bool cardplayed = false;
     Player* currentPlayer = playerList[turnIndex];
     while(!winner){
         currentPlayer = playerList[turnIndex];
@@ -127,8 +128,8 @@ int main() {
         PlayTable.playstack->PrintTop();
         cout << ". " << endl;
         
-        currentPlayer->play(&PlayTable);
-        //PlayTable.playstack->topOfDeck->Action(*turnOrder, *playerList);
+        cardplayed = currentPlayer->play(&PlayTable);
+        Action(PlayTable.playstack->topOfDeck(), &playerList);
 
 
         if(currentPlayer->numofcards == 1){
