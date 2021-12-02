@@ -137,9 +137,9 @@ int main() {
         cout << "." << endl;
 
         if(currentPlayer->numofcards == 1){
-            cout << currentPlayer->name << "has UNO!" << endl;
+            cout << currentPlayer->name << " has UNO!" << endl;
         } else if(currentPlayer->numofcards == 0) {
-            cout << currentPlayer->name << "has won!" << endl;
+            cout << currentPlayer->name << " has won!" << endl;
             winner = true;
         }
         

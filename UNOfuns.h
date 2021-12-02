@@ -97,7 +97,15 @@ public:
         CreateDeck();
         Shuffle();
     }
+    DrawPile(vector<Card> tmp) {
+        dcards = tmp;
+        Shuffle();
+    }
+    bool isEmpty() { //returns whether deck is empty
+        return numofcards == 0;
+    }
     void Deal(); //Deal starting cards to players
+
 };
 
 class PlayPile{ //Cards that have been played
@@ -108,7 +116,15 @@ public:
     void PrintTop(){ //prints top card on play pile
         topOfDeck()->Print();
     }
-    void ReturnToDrawPile(); //return played cards back to the draw pile
+    DrawPile* ReturnToDrawPile() { //return played cards back to the draw pile
+        Card hold = *topOfDeck();
+        pcards.pop_back();
+        vector<Card> temp = pcards;
+        pcards.clear();
+        length = 0;
+        DrawPile* newdraw = new DrawPile(temp);
+        return newdraw;
+    }
 };
 
 //player's cards
@@ -202,6 +218,9 @@ public:
             }
             else if(input == 2) {
                 draw(table->drawstack);
+                if(table->drawstack->isEmpty()) {
+                    table->playstack->ReturnToDrawPile();
+                }
                 cout << "You Drew a "; currentCards.getCard(currentCards.length-1)->Print(); cout << endl;
                 if(currentCards.getCard(currentCards.length-1)->playable(table->playstack->topOfDeck())) {
                     hold = currentCards.getCard(currentCards.length-1);
@@ -238,6 +257,9 @@ public:
         }
 
         draw(deck); //if no playable cards, draw a card from the deck
+        if(table->drawstack->isEmpty()) {
+            table->playstack->ReturnToDrawPile();
+        }
         currcard = currentCards.getCard(currentCards.length - 1);
         if(currcard->playable(playpile->topOfDeck())) { //if card is then playable, then play it. Otherwise return
             playpile->pcards.push_back(*currcard);
