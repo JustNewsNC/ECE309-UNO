@@ -129,8 +129,7 @@ int main() {
         cout << ". " << endl;
         
         cardplayed = currentPlayer->play(&PlayTable);
-        if(cardplayed) Action(PlayTable.playstack->topOfDeck(), turnOrder, turnIndex, &playerList);
-
+        if(cardplayed) Action(PlayTable.playstack->topOfDeck(), turnOrder, turnIndex, playerList, &PlayTable);
 
         if(currentPlayer->numofcards == 1){
             cout << currentPlayer->name << " has UNO!" << endl;

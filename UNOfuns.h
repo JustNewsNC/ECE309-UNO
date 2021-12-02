@@ -186,6 +186,7 @@ public:
     void draw(DrawPile* indrawstack) {
         currentCards.Draw(indrawstack);
         numofcards++;
+        cout << name << " drew." << endl;
     }
     virtual bool play(Table* table){
         cout << "base" << endl;
@@ -271,7 +272,6 @@ public:
         }
 
         draw(deck); //if no playable cards, draw a card from the deck
-        cout << name << " drew." << endl;
         if(table->drawstack->isEmpty()) {
             table->drawstack = table->playstack->ReturnToDrawPile();
         }
@@ -288,18 +288,35 @@ public:
     }
 };
 
-void Action(Card* played, int &turnOrder, int &turnIndex, vector<Player*> *playerList) {
-    if(played->cardtype() == 'N');
+void Action(Card* played, int &turnOrder, int &turnIndex, vector<Player*> &playerList, Table* table) {
+    if(played->cardtype() == '2') {
+        turnIndex += turnOrder;
+        if(turnIndex >= (int)playerList.size()){
+            turnIndex = 0;
+        } else if(turnIndex < 0){
+            turnIndex = (int)playerList.size() - 1;
+        }
+        for(int i=0;i<2;i++) playerList[turnIndex]->draw(table->drawstack);
+    }
     else if(played->cardtype() == 'R') {
         turnOrder *= (-1);
     }
     else if(played->cardtype() == 'S') {
         turnIndex += turnOrder;
-        if(turnIndex >= (int)playerList->size()){
+        if(turnIndex >= (int)playerList.size()){
             turnIndex = 0;
         } else if(turnIndex < 0){
-            turnIndex = (int)playerList->size() - 1;
+            turnIndex = (int)playerList.size() - 1;
         }
+    }
+    else if(played->cardtype() == '4') {
+        turnIndex += turnOrder;
+        if(turnIndex >= (int)playerList.size()){
+            turnIndex = 0;
+        } else if(turnIndex < 0){
+            turnIndex = (int)playerList.size() - 1;
+        }
+        for(int i=0;i<4;i++) playerList[turnIndex]->draw(table->drawstack);
     }
 
 }
