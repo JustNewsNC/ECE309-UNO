@@ -8,13 +8,14 @@
 
 using namespace std;
 Table PlayTable = Table();
-vector<Player> playerList;
+vector<Player*> playerList;
 
 //fills a vector with the specified amount of bots
 void createPlayers(int amount){
     int i = 1;
     while(i < amount + 1){
-        playerList.push_back(CompPlayer(i));
+        CompPlayer* temp = new CompPlayer(i);
+        playerList.push_back(temp);
         i++;
     }
 }
@@ -25,9 +26,10 @@ void GameStartWithPlayer(){
     char input;
     cout << "Welcome! What is your name?" << endl;
     cin >> name;
-    playerList.push_back(RealPlayer(name));
+    RealPlayer* temp = new RealPlayer(name);
+    playerList.push_back(temp);
     while(1) {
-        cout << "Are you Ready to play, " << playerList.front().name << "? (Y/N)" << endl;
+        cout << "Are you Ready to play, " << playerList.front()->name << "? (Y/N)" << endl;
         cin >> input;
         int playerCount = 0;
         if (input == 'Y' || input == 'y') {
@@ -63,8 +65,8 @@ void GameStartNoPlayer(){
 void DrawPile::Deal() {
     for(int i=0; i<7; i++) {
         for(int j=0; j<(int)playerList.size(); j++) {
-            playerList[j].currentCards.Draw(PlayTable.drawstack);
-            playerList[j].numofcards++;
+            playerList[j]->currentCards.Draw(PlayTable.drawstack);
+            playerList[j]->numofcards++;
             numofcards--;
         }
     }
@@ -93,36 +95,51 @@ int main() {
     cin >> input;
     if(input == 'Y' || input == 'p'){
         for(int i=0; i<(int)playerList.size(); i++) { //prints all players card (used to test shuffle, deal, and draw)
-            cout << playerList[i].name << ": ";
-            playerList[i].currentCards.Print();
+            cout << playerList[i]->name << ": ";
+            playerList[i]->currentCards.Print();
             cout << endl;
-            playerList[i].play(&PlayTable);
+            playerList[i]->play(&PlayTable);
         }
+
+        CompPlayer Sam = CompPlayer(1);
+        Player* ptr = &Sam;
+        for(int i=0; i<7; i++) ptr->draw(PlayTable.drawstack);
+        for(int i=0; i<4; i++) {
+            cout << "The current card on top is ";
+            PlayTable.playstack->PrintTop();
+            cout << ". " << endl;
+            ptr->currentCards.Print();
+            ptr->play(&PlayTable);
+        }
+        cout << "The current card on top is ";
+        PlayTable.playstack->PrintTop();
+        cout << ". " << endl;
+
     }
     
     int turnIndex = 0; //turn order
     int turnCount = 0; //turn count
     int turnOrder = 1;
-    Player currentPlayer = playerList[turnIndex];
+    Player* currentPlayer = playerList[turnIndex];
     while(!winner){
         currentPlayer = playerList[turnIndex];
         cout << "Turn: " << turnIndex << " -----------------" << endl;
-        cout << "It is " << currentPlayer.name << "'s turn" << endl;
+        cout << "It is " << currentPlayer->name << "'s turn" << endl;
         cout << "The current card on top is ";
         PlayTable.playstack->PrintTop();
         cout << ". " << endl;
         
-        currentPlayer.play(&PlayTable);
+        currentPlayer->play(&PlayTable);
         //PlayTable.playstack->topOfDeck->Action(*turnOrder, *playerList);
         
-        cout << currentPlayer.name << " played ";
+        cout << currentPlayer->name << " played ";
         PlayTable.playstack->topOfDeck()->Print();
         cout << "." << endl;
 
-        if(currentPlayer.numofcards == 1){
-            cout << currentPlayer.name << "has UNO!" << endl;
-        } else if(currentPlayer.numofcards == 0) {
-            cout << currentPlayer.name << "has won!" << endl;
+        if(currentPlayer->numofcards == 1){
+            cout << currentPlayer->name << "has UNO!" << endl;
+        } else if(currentPlayer->numofcards == 0) {
+            cout << currentPlayer->name << "has won!" << endl;
             winner = true;
         }
         

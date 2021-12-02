@@ -174,7 +174,7 @@ class RealPlayer : public Player {
 public:
     RealPlayer(string a):Player(a){};
 
-    void play(Table* table) override { //GUI
+    virtual void play(Table* table) override { //GUI
         int input;
         Card *hold;
         while (1) {
@@ -211,7 +211,7 @@ public:
     CompPlayer(int n): Player("COM ") {
         name += std::to_string(n);
     }
-    void play(Table* table) override { //Automatically play/draw cards
+    virtual void play(Table* table) override { //Automatically play/draw cards
         DrawPile* deck = table->drawstack;
         PlayPile* playpile = table->playstack;
         Card* currcard;
