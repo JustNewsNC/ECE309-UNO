@@ -129,40 +129,21 @@ int main() {
         cout << "Please Enter Valid Mode" << endl;
     }
     PlayTable.drawstack->Deal();
-    PlayTable.playstack->pcards.push_back(PlayTable.drawstack->dcards[PlayTable.drawstack->numofcards-1]);
-    PlayTable.playstack->length++;
-    PlayTable.drawstack->dcards.pop_back();
-    PlayTable.drawstack->numofcards--;
+    while(1) {
+        PlayTable.playstack->pcards.push_back(PlayTable.drawstack->dcards[PlayTable.drawstack->numofcards - 1]);
+        PlayTable.playstack->length++;
+        PlayTable.drawstack->dcards.pop_back();
+        PlayTable.drawstack->numofcards--;
+        if(PlayTable.playstack->topOfDeck()->cardtype() != 'W') break; //prevents first card being a Wild
+    }
 
-    /*cout << "Debug Mode: Y/N" << endl;
-    cin >> input;
-    if(input == 'Y' || input == 'p'){
-        for(int i=0; i<(int)playerList.size(); i++) { //prints all players card (used to test shuffle, deal, and draw)
-            cout << playerList[i]->name << ": ";
-            playerList[i]->currentCards.Print();
-            cout << endl;
-            playerList[i]->play(&PlayTable);
-        }
 
-        RealPlayer Sam = RealPlayer("Sam");
-        Player* ptr = &Sam;
-        for(int i=0; i<60; i++) ptr->draw(PlayTable.drawstack);
-        int given = 1;
-        while(given != 0) {
-            cin >> given;
-            ptr->play(&PlayTable);
-        }
-        cout << "The current card on top is ";
-        PlayTable.playstack->PrintTop();
-        cout << ". " << endl;
-
-    } */  //Can Probably Be Deleted Soon
-    
     int turnIndex = 0; //turn order
     int turnCount = 0; //turn count
     int turnOrder = 1;
     bool cardplayed = false;
     Player* currentPlayer = playerList[turnIndex];
+    Action(PlayTable.playstack->topOfDeck(), turnOrder, turnIndex, playerList, &PlayTable); //does action of first card in playstack
     while(!winner){
         currentPlayer = playerList[turnIndex];
         cout << "Turn: " << turnCount << " -----------------" << endl;

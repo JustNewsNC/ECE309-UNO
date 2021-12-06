@@ -50,8 +50,8 @@ public:
         else if(color == 'G') std::cout << "Green ";
         else if(color == 'Y') std::cout << "Yellow ";
         else if(color == 'W') {
-            std::cout << "Wild ";
-            if(type == 4) std::cout << "Draw 4";
+            std::cout << "Wild";
+            if(type == '4') std::cout << " Draw 4";
         }
         if(type == 'N') std::cout << number;
         else if (type == 'R') std::cout << "Reverse";
