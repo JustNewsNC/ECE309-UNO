@@ -3,11 +3,13 @@ This project implements the popular family card game **UNO** into a Command-Line
 Compatbility: Common Platform (UNIX) and Windows
 
 # How to compile:
+
     ## 1) Run CMake on the directory
     ## 2) use the make command
     ## 3) open UNOgame
 
 # **Rules:**
+
     ## 1) **UNO** starts with *each* **player** being dealt **7** cards from the **deck**. Then, a single card from the **deck** is placed into the **play stack**.
     
     ## 2) Then, **players** go in turns placing cards onto the **play stack**. To place a card, either the **color** or **number** must match the top card in the **play stack**
@@ -20,6 +22,7 @@ Compatbility: Common Platform (UNIX) and Windows
     
     
 # **Special Cards:**
+
         ## There are a number of **special cards** that have unique attributes. Typically, these cards have their own color (Wild) though some are limited to a specific color.
         
         ## **Wild Cards**
@@ -36,6 +39,7 @@ Compatbility: Common Platform (UNIX) and Windows
             3) Draw 2: This card causes the **next player** to draw **2 cards** that player is then skipped 
             
 # Interesting Features:
+
     ## Features of this project that may not be expected or provide something unique
     
         1) Multiple players. Entering multiple players will allow them to enter their name and be added to the turn order
@@ -43,12 +47,14 @@ Compatbility: Common Platform (UNIX) and Windows
         3) Mixed matches. Any number of real players and bots (up to a combined maximum of 4) can play together.
             
 # Consolidations:
+
     ###Not all features of UNO work in this format, the following consolidations have been made:
         
         1) Players can not be penalized for not saying UNO when they only have one card remaining; the game does this automatically.
         2) Players can look in the terminal's history to see other human player's hands.
 
 # Status:
+
     ## Known issues with the program
     
         1) Players can see previous player's hands in the terminal history. (Unable to delete terminal history)
