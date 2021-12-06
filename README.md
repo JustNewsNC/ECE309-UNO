@@ -49,5 +49,5 @@ This project implements the popular family card game **UNO** into a Command-Line
     ###Known issues with the program
     
         1) Players can see previous player's hands in the terminal history. (Unable to delete terminal history)
-        2) The program is limited to 4 players. (A standard UNO deck is fit for up to 4 players, and this program only utilizes one deck.)
+        2) The program is limited to 4 players. (A standard UNO deck is fit for up to 4 players, and this program only utilizes one deck)
         3) Readibility and general UX could use further improvement.
