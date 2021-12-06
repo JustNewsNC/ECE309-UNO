@@ -3,9 +3,10 @@ This project implements the popular family card game **UNO** into a Command-Line
 Compatbility: Common Platform (UNIX) and Windows
 
 ## How to compile:
-1) Run CMake on the directory
-2) use the make command
-3) open UNOgame
+1) Open CMake and point it at the source directory
+2) Generate a makefile
+3) use the make command
+4) open UNOgame
 
 ## **Rules:**
 
