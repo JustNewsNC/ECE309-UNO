@@ -5,11 +5,11 @@ This project implements the popular family card game **UNO** into a Command-Line
     
 
 ##**Rules:**
-    ###1) **UNO** starts with *each* **player** being dealt **8** cards from the **deck**. Then, a single card from the **deck** is placed into the **play space**.
+    ###1) **UNO** starts with *each* **player** being dealt **7** cards from the **deck**. Then, a single card from the **deck** is placed into the **play stack**.
     
-    ###2) Then, **players** go in turns placing cards onto the **play space**. To place a card, either the **color** or **number** must match the top       card in the **play space**
+    ###2) Then, **players** go in turns placing cards onto the **play stack**. To place a card, either the **color** or **number** must match the top card in the **play stack**
     
-    ###3) If a **player** has no cards that that can be put into the **play space**, then they draw a card from the **deck**
+    ###3) If a **player** has no cards that that can be put into the **play stack**, then they draw a card from the **deck**
     
     ###4) Once a **player** has **one** card remaining, that **player** has **UNO**
     
@@ -21,16 +21,16 @@ This project implements the popular family card game **UNO** into a Command-Line
         
         ###**Wild Cards**
             1) Draw 4: This card allows the **player** to change the active **color** and cause the **next player** to draw **4 cards**
-            
-            2) Draw 2: This card allows the **player** to change the active **color** and cause the **next player** to draw **2 cards**
-            
+                        
             3) Wild: This card allows the **player** to change the active **color**
             
         ###**Color Cards**
             
             1) Skip: This card causes the **next player** to be skipped
             
-            2) Reverse: This card reverse the turn order.
+            2) Reverse: This card reverses the turn order.
+            
+            3) Draw 2: This card causes the **next player** to draw **2 cards** that player is then skipped 
             
 ##Interesting Features:
     ###Features of this project that may not be expected or provide something unique
@@ -40,7 +40,7 @@ This project implements the popular family card game **UNO** into a Command-Line
         3) Mixed matches. Any number of real players and bots (up to a combined maximum of 4) can play together.
             
 ##Consolidations:
-    ###Not all features of UNO work in this format, the following consoldiations have been made:
+    ###Not all features of UNO work in this format, the following consolidations have been made:
         
         1) Players can not be penalized for not saying UNO when they only have one card remaining; the game does this automatically.
         2) Players can look in the terminal's history to see other human player's hands.
@@ -48,6 +48,6 @@ This project implements the popular family card game **UNO** into a Command-Line
 ##Status:
     ###Known issues with the program
     
-        1) Players can see previous player's hands in the terminal history
-        2) The program is limited to 4 players.
+        1) Players can see previous player's hands in the terminal history. (Unable to delete terminal history)
+        2) The program is limited to 4 players. (A standard UNO deck is fit for up to 4 players, and this program only utilizes one deck.)
         3) Readibility and general UX could use further improvement.
