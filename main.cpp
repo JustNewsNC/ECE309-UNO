@@ -10,17 +10,14 @@ using namespace std;
 Table PlayTable = Table();
 vector<Player*> playerList;
 
-void NewPlayer(int playerCount){
-    int currentPlayerID = 1;
-    int maxPlayers = 4;
+void NewPlayer(int playerCount){ //creates new RealPlayers
     string name;
     RealPlayer* temp;
-    while(currentPlayerID <= (playerCount+1)){
-        cout << "Please enter the name of Player " << currentPlayerID << "." << endl;
+    for(int i=1; i<playerCount+1; i++) {
+        cout << "Please enter the name of Player " << i << "." << endl;
         cin >> name;
         temp = new RealPlayer(name);
         playerList.push_back(temp);
-        currentPlayerID++;
     }
 }
 
@@ -46,7 +43,8 @@ void GameStartWithPlayer(){
     if(input == 'Y' || input == 'y'){
         cout << "How many other players are there? (1-3)" << endl;
         cin >> playerCount;
-        NewPlayer(playerCount++);
+        playerCount++;
+        NewPlayer(playerCount);
         
     } else if(input == 'N' || input == 'n') {
         NewPlayer(playerCount);
@@ -56,7 +54,7 @@ void GameStartWithPlayer(){
         cin >> input;
         int maxBots = maxPlayers - playerCount;
         int minBots = 1;
-        if (input == 'Y' || input == 'y') {
+        if (input == 'Y' || input == 'y') {            //allows player to create at most 4 players including both real and computer
             while(botCount < 1 || botCount > maxBots) {
                 if(playerCount >= 2){
                     minBots = 0;
@@ -65,7 +63,7 @@ void GameStartWithPlayer(){
                 }
                 cout << "How many bots would you like to play against? (" << minBots << "-" <<  maxBots << ")" << endl;
                 cin >> botCount;
-                if(botCount < minBots || botCount > maxBots){
+                if(botCount < minBots || botCount > maxBots){       //ensures valid input
                     cout << "Please Enter Valid Number" << endl;
                 } else {
                     NewBots(botCount);
@@ -73,7 +71,7 @@ void GameStartWithPlayer(){
                 }
             }
         }
-        else if(input == 'N' || input == 'n') {
+        else if(input == 'N' || input == 'n') { //aborts program
             cout << "Exiting Game" << endl;
             abort();
         }
