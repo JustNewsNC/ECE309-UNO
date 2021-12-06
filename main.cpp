@@ -10,10 +10,24 @@ using namespace std;
 Table PlayTable = Table();
 vector<Player*> playerList;
 
+void NewPlayer(int playerCount){
+    int currentPlayerID = 1;
+    int maxPlayers = 4;
+    string name;
+    RealPlayer* temp;
+    while(currentPlayerID <= (playerCount+1)){
+        cout << "Please enter the name of Player " << currentPlayerID << "." << endl;
+        cin >> name;
+        temp = new RealPlayer(name);
+        playerList.push_back(temp);
+        currentPlayerID++;
+    }
+}
+
 //fills a vector with the specified amount of bots
-void createPlayers(int amount){
+void NewBots(int botCount){
     int i = 1;
-    while(i < amount + 1){
+    while(i < botCount + 1){
         CompPlayer* temp = new CompPlayer(i);
         playerList.push_back(temp);
         i++;
@@ -24,21 +38,37 @@ void createPlayers(int amount){
 void GameStartWithPlayer(){
     string name;
     char input;
-    cout << "Welcome! What is your name?" << endl;
-    cin >> name;
-    RealPlayer* temp = new RealPlayer(name);
-    playerList.push_back(temp);
+    int playerCount = 1;
+    int botCount = 0;
+    int maxPlayers = 4;
+    cout << "Would you like to play against other players? (Y/N)" << endl;
+    cin >> input;
+    if(input == 'Y' || input == 'y'){
+        cout << "How many other players are there? (1-3)" << endl;
+        cin >> playerCount;
+        NewPlayer(playerCount++);
+        
+    } else if(input == 'N' || input == 'n') {
+        NewPlayer(playerCount);
+    }
     while(1) {
         cout << "Are you Ready to play, " << playerList.front()->name << "? (Y/N)" << endl;
         cin >> input;
-        int playerCount = 0;
+        int maxBots = maxPlayers - playerCount;
+        int minBots = 1;
         if (input == 'Y' || input == 'y') {
-            while(playerCount < 1 || playerCount > 3) {
-                cout << "How many enemies would you like to play against? (1-3)" << endl;
-                cin >> playerCount;
-                if(playerCount < 1 || playerCount > 3) cout << "Please Enter Valid Number" << endl;
-                else {
-                    createPlayers(playerCount);
+            while(botCount < 1 || botCount > maxBots) {
+                if(playerCount >= 2){
+                    minBots = 0;
+                } else {
+                    minBots = 1;
+                }
+                cout << "How many bots would you like to play against? (" << minBots << "-" <<  maxBots << ")" << endl;
+                cin >> botCount;
+                if(botCount < minBots || botCount > maxBots){
+                    cout << "Please Enter Valid Number" << endl;
+                } else {
+                    NewBots(botCount);
                     return;
                 }
             }
@@ -53,6 +83,7 @@ void GameStartWithPlayer(){
     }
 }
 
+
 //setups a game for spectators
 void GameStartNoPlayer(){
     int playerCount = 0;
@@ -60,7 +91,7 @@ void GameStartNoPlayer(){
         cout << "How many computers would you like to see play? (2 to 4)" << endl;
         cin >> playerCount;
         if(playerCount >= 2 && playerCount <= 4) { //Game works best with between 2 to 4 players.
-            createPlayers(playerCount);
+            NewBots(playerCount);
             return;
         }
         cout << "Please Enter Valid Number." << endl;
@@ -83,10 +114,11 @@ void DrawPile::Deal() {
 int main() {
     char input;
     bool winner = false;
+    int maxCount = 4;
     cout << "Are you a player or spectator? (P/S)" << endl;
     while(1) {
         cin >> input;
-        if (input == 'P' || input == 'p') {
+        if(input == 'P' || input == 'p'){
             GameStartWithPlayer();
             break;
         }
